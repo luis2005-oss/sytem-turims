@@ -1,4 +1,3 @@
-
 .hero {
   position: relative;
   width: 100%;
@@ -12,6 +11,10 @@
 }
 
 .heroImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: -3;
   object-fit: cover;
   object-position: center 45%;
@@ -52,7 +55,7 @@
 .heroContent {
   width: min(1180px, calc(100% - 48px));
   margin: auto;
-  padding-top: 90px;
+  padding-top: 90px;                  /* deja espacio para el header que flota encima */
   color: #fff;
   animation: heroEntrance .9s ease;
 }
@@ -73,6 +76,7 @@
 
 .heroTag::before {
   content: "";
+  flex-shrink: 0;
   width: 42px;
   height: 2px;
   border-radius: 20px;
@@ -90,6 +94,7 @@
   letter-spacing: -.04em;
   text-transform: uppercase;
   text-shadow: 0 8px 18px rgba(0,0,0,.25);
+  overflow-wrap: break-word;
 }
 
 .heroContent h1 span {
@@ -128,6 +133,7 @@
   font-size: .94rem;
   font-weight: 700;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
   transition: .3s ease;
 }
 
@@ -137,20 +143,254 @@
   box-shadow: 0 15px 35px rgba(60,215,90,.28);
 }
 
-.primaryButton:hover {
-  background: #73e682;
-  transform: translateY(-4px);
-}
-
 .secondaryButton {
   color: #fff;
   border: 1px solid rgba(255,255,255,.35);
   background: rgba(255,255,255,.08);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
-.secondaryButton:hover {
-  transform: translateY(-4px);
-  border-color: #67dd76;
-  background: rgba(88,216,103,.18);
+/* Hover solo con mouse (en celular se quedaba "levantado" después de tocar) */
+@media (hover: hover) {
+  .primaryButton:hover {
+    background: #73e682;
+    transform: translateY(-4px);
+  }
+
+  .secondaryButton:hover {
+    transform: translateY(-4px);
+    border-color: #67dd76;
+    background: rgba(88,216,103,.18);
+  }
+}
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+
+/* ============ RESPONSIVE ============ */
+
+/* PC grande (1400px en adelante) */
+@media (min-width: 1400px) {
+  .hero {
+    max-height: 860px;
+  }
+
+  .heroContent {
+    width: min(1280px, calc(100% - 96px));
+  }
+
+  .heroContent h1 {
+    max-width: 780px;
+  }
+
+  .heroContent p {
+    max-width: 620px;
+    font-size: 1.15rem;
+  }
+}
+
+/* Laptop (hasta 1366px) */
+@media (max-width: 1366px) {
+  .hero {
+    min-height: 600px;
+  }
+
+  .heroContent {
+    padding-top: 80px;
+  }
+
+  .heroContent h1 {
+    font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+  }
+}
+
+/* Laptop pequeña / tablet horizontal (hasta 1024px) */
+@media (max-width: 1024px) {
+  .hero {
+    min-height: 560px;
+  }
+
+  .heroContent {
+    padding-top: 76px;
+  }
+
+  .heroContent h1 {
+    max-width: 600px;
+    font-size: clamp(2.5rem, 7vw, 3.8rem);
+  }
+
+  .heroLight {
+    width: 400px;
+    height: 400px;
+    left: -180px;
+    bottom: -220px;
+  }
+}
+
+/* Tablet vertical (hasta 768px) */
+@media (max-width: 768px) {
+  .hero {
+    height: auto;                     /* el contenido define el alto */
+    min-height: 560px;
+    max-height: none;
+    padding: 0 0 50px;
+  }
+
+  .heroImage {
+    object-position: 60% center;
+  }
+
+  /* El texto ocupa todo el ancho: se oscurece parejo de arriba hacia abajo */
+  .heroOverlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(4, 22, 18, .70) 0%,
+        rgba(4, 22, 18, .78) 55%,
+        rgba(4, 22, 18, .88) 100%
+      );
+  }
+
+  .heroContent {
+    width: calc(100% - 40px);
+    padding-top: 100px;
+  }
+
+  .heroContent p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .heroButtons {
+    margin-top: 28px;
+  }
+}
+
+/* Móvil (hasta 480px) */
+@media (max-width: 480px) {
+  .hero {
+    min-height: 520px;
+    padding-bottom: 44px;
+  }
+
+  .heroContent {
+    width: calc(100% - 32px);
+    padding-top: 92px;
+  }
+
+  .heroTag {
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: .72rem;
+    letter-spacing: .14em;
+  }
+
+  .heroTag::before {
+    width: 30px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.2rem;
+    line-height: 1.05;
+    letter-spacing: -.03em;
+  }
+
+  .heroContent h1 span {
+    margin-top: 6px;
+  }
+
+  .heroContent p {
+    margin-top: 16px;
+    font-size: .95rem;
+  }
+
+  .heroLight {
+    width: 280px;
+    height: 280px;
+    left: -140px;
+    bottom: -160px;
+    filter: blur(60px);
+  }
+
+  .heroButtons {
+    flex-direction: column;           /* botones apilados y a todo el ancho */
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    min-height: 52px;
+  }
+}
+
+/* Móvil muy pequeño (hasta 360px) */
+@media (max-width: 360px) {
+  .hero {
+    min-height: 480px;
+  }
+
+  .heroContent {
+    width: calc(100% - 24px);
+    padding-top: 84px;
+  }
+
+  .heroContent h1 {
+    font-size: 1.9rem;
+  }
+
+  .heroContent p {
+    font-size: .9rem;
+    line-height: 1.65;
+  }
+}
+
+/* Celular acostado (poca altura) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    height: auto;
+    min-height: 0;
+    padding: 0 0 36px;
+  }
+
+  .heroContent {
+    padding-top: 80px;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
+  }
+
+  .heroContent p {
+    margin-top: 12px;
+  }
+
+  .heroButtons {
+    flex-direction: row;
+    margin-top: 20px;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: auto;
+    min-height: 46px;
+  }
+}
+
+/* Respeta la preferencia de menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .heroContent {
+    animation: none;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    transition: none;
+  }
 }

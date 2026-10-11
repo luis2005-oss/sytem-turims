@@ -1,5 +1,5 @@
 .presentation {
-  padding: 10vh;
+  padding: clamp(50px, 10vh, 110px) clamp(16px, 5vw, 90px);
   background:
     radial-gradient(
       circle at 5% 8%,
@@ -12,8 +12,15 @@
 .presentationGrid {
   display: grid;
   grid-template-columns: 1fr .95fr;
-  gap: 80px;
+  gap: clamp(40px, 5.5vw, 80px);
   align-items: center;
+  max-width: 1500px;                  /* en monitores muy anchos no se estira */
+  margin: 0 auto;
+}
+
+/* Evita que el contenido desborde su columna */
+.presentationGrid > * {
+  min-width: 0;
 }
 
 /*etiqueta superior*/
@@ -31,6 +38,7 @@
 
 .eyebrow::before {
   content: "";
+  flex-shrink: 0;
   width: 36px;
   height: 2px;
   border-radius: 50px;
@@ -46,17 +54,18 @@
   line-height: 1.08;
   font-weight: 800;
   letter-spacing: -.03em;
+  overflow-wrap: break-word;
 }
 
 /*parrafos*/
 
 .presentationText p {
-
   margin-bottom: 18px;
   color: #61706c;
   font-size: 1.03rem;
   line-height: 1.85;
   text-align: justify;
+  hyphens: auto;                      /* reduce los huecos del texto justificado */
 }
 
 /*estadisticas*/
@@ -64,7 +73,7 @@
 .presentationStats {
   margin-top: 40px;
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
 }
 
@@ -74,11 +83,6 @@
   border: 1px solid rgba(20,70,40,.08);
   border-radius: 18px;
   transition: .3s;
-}
-
-.presentationStats div:hover{
-  transform: translateY(-6px);
-  box-shadow: 0 15px 35px rgba(0,0,0,.08);
 }
 
 .presentationStats strong{
@@ -105,27 +109,26 @@
   box-shadow:0 30px 60px rgba(0,0,0,.15);
 }
 
-.presentationImage:hover .coverImage{
-  transform:scale(1.05);
-}
-
 /*tarjeta flotante*/
 
 .imageBadge{
   position:absolute;
   right:25px;
   bottom:25px;
+  max-width: calc(100% - 50px);       /* nunca se sale de la imagen */
   padding:18px 22px;
   display:flex;
   align-items:center;
   gap:15px;
   border-radius:18px;
   background:rgba(8,35,25,.82);
+  -webkit-backdrop-filter:blur(15px);
   backdrop-filter:blur(15px);
   color:white;
 }
 
 .imageBadge>span{
+  flex-shrink: 0;
   width:12px;
   height:12px;
   border-radius:50%;
@@ -149,9 +152,10 @@
 /*experiencias*/
 
 .experienceGrid{
-  margin-top:70px;
+  max-width: 1500px;
+  margin: 70px auto 0;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(4, minmax(0, 1fr));
   gap:22px;
 }
 
@@ -169,14 +173,27 @@
   transition:.35s;
 }
 
-.experienceCard:hover{
-  transform:translateY(-8px);
-  box-shadow:0 22px 45px rgba(0,0,0,.12);
-  border-color:#55d665;
+/* Hover solo con mouse (en celular se quedaba pegado al tocar) */
+@media (hover: hover) {
+  .presentationStats div:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,0,0,.08);
+  }
+
+  .presentationImage:hover .coverImage{
+    transform:scale(1.05);
+  }
+
+  .experienceCard:hover{
+    transform:translateY(-8px);
+    box-shadow:0 22px 45px rgba(0,0,0,.12);
+    border-color:#55d665;
+  }
 }
 
 /*icono*/
 .experienceIcon{
+  flex-shrink: 0;                     /* el icono no se aplasta cuando falta espacio */
   width: 60px;
   height: 60px;
   border-radius: 16px;
@@ -186,13 +203,13 @@
   align-items: center;
 }
 
-
 /*titulo*/
 .experienceCard h3{
   margin:0 0 10px;
   color:#17352e;
   font-size:1.15rem;
   font-weight:700;
+  overflow-wrap: break-word;
 }
 
 /*textoo*/
@@ -202,4 +219,272 @@
   color:#697874;
   line-height:1.7;
   font-size:.92rem;
+}
+
+
+/* ============ RESPONSIVE ============ */
+
+/* PC grande (1400px en adelante) */
+@media (min-width: 1400px) {
+  .presentationImage {
+    min-height: 600px;
+  }
+
+  .experienceGrid {
+    gap: 28px;
+  }
+
+  .presentationText p {
+    font-size: 1.08rem;
+  }
+}
+
+/* Laptop (hasta 1366px) */
+@media (max-width: 1366px) {
+  .presentationImage {
+    min-height: 480px;
+  }
+
+  .experienceGrid {
+    margin-top: 55px;
+    gap: 18px;
+  }
+
+  .experienceCard {
+    padding: 22px;
+    gap: 15px;
+  }
+
+  .experienceIcon {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* Laptop pequeña (hasta 1180px): las tarjetas pasan a 2 columnas */
+@media (max-width: 1180px) {
+  .experienceGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Tablet horizontal (hasta 1024px): presentación en una columna */
+@media (max-width: 1024px) {
+  .presentationGrid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+    max-width: 760px;
+  }
+
+  .presentationImage {
+    min-height: 0;
+    aspect-ratio: 16 / 10;            /* la imagen mantiene proporción sin alto fijo */
+  }
+
+  .presentationText h2 {
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+
+  .experienceGrid {
+    max-width: 760px;
+  }
+}
+
+/* Tablet vertical (hasta 768px) */
+@media (max-width: 768px) {
+  .presentationGrid {
+    gap: 35px;
+  }
+
+  .presentationImage {
+    border-radius: 22px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .presentationText h2 {
+    margin: 14px 0 20px;
+  }
+
+  .presentationText p {
+    font-size: 1rem;
+    line-height: 1.75;
+    text-align: left;                 /* el texto justificado deja huecos en pantallas angostas */
+    hyphens: none;
+  }
+
+  .presentationStats {
+    margin-top: 32px;
+    gap: 14px;
+  }
+
+  .presentationStats div {
+    padding: 20px 16px;
+  }
+
+  .presentationStats strong {
+    font-size: 1.5rem;
+  }
+
+  .imageBadge {
+    right: 18px;
+    bottom: 18px;
+    padding: 14px 18px;
+  }
+
+  .experienceGrid {
+    margin-top: 45px;
+    gap: 16px;
+  }
+}
+
+/* Móvil (hasta 600px): tarjetas de experiencia en una columna */
+@media (max-width: 600px) {
+  .experienceGrid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+}
+
+/* Móvil (hasta 480px) */
+@media (max-width: 480px) {
+  .presentation {
+    padding: 45px 16px;
+  }
+
+  .presentationGrid {
+    gap: 28px;
+  }
+
+  .presentationImage {
+    border-radius: 18px;
+    aspect-ratio: 1 / 1;
+  }
+
+  .presentationText h2 {
+    margin: 12px 0 16px;
+    font-size: 1.9rem;
+  }
+
+  .presentationText p {
+    font-size: .95rem;
+    margin-bottom: 14px;
+  }
+
+  .eyebrow {
+    gap: 10px;
+    font-size: .72rem;
+    letter-spacing: .13em;
+  }
+
+  .eyebrow::before {
+    width: 28px;
+  }
+
+  /* Estadísticas en una columna, con el número a la izquierda y el texto a la derecha */
+  .presentationStats {
+    grid-template-columns: 1fr;
+    margin-top: 26px;
+    gap: 12px;
+  }
+
+  .presentationStats div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+  }
+
+  .presentationStats strong {
+    flex-shrink: 0;
+    min-width: 72px;
+    margin-bottom: 0;
+    font-size: 1.45rem;
+  }
+
+  .imageBadge {
+    right: 12px;
+    bottom: 12px;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: 14px;
+  }
+
+  .experienceGrid {
+    margin-top: 38px;
+    gap: 14px;
+  }
+
+  .experienceCard {
+    padding: 20px;
+    gap: 14px;
+    border-radius: 18px;
+  }
+
+  .experienceIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
+
+  .experienceCard h3 {
+    font-size: 1.08rem;
+  }
+
+  .experienceCard p {
+    font-size: .9rem;
+    line-height: 1.65;
+  }
+}
+
+/* Móvil muy pequeño (hasta 360px) */
+@media (max-width: 360px) {
+  .presentation {
+    padding: 38px 12px;
+  }
+
+  .presentationText h2 {
+    font-size: 1.7rem;
+  }
+
+  .presentationStats strong {
+    min-width: 62px;
+    font-size: 1.3rem;
+  }
+
+  .experienceCard {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .experienceIcon {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* Celular acostado (poca altura) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .presentation {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .presentationImage {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* Respeta la preferencia de menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .presentationStats div,
+  .experienceCard,
+  .presentationImage .coverImage {
+    transition: none;
+  }
+
+  .presentationStats div:hover,
+  .experienceCard:hover,
+  .presentationImage:hover .coverImage {
+    transform: none;
+  }
 }

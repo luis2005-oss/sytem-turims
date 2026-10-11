@@ -1,6 +1,27 @@
 .pagina {
   width: 100%;
   min-height: 100vh;
-  overflow: hidden;
+  min-height: 100dvh;                 /* alto real de la pantalla en celular */
+  overflow-x: hidden;                 /* respaldo para navegadores que no soportan clip */
+  overflow-x: clip;                   /* evita el scroll horizontal sin romper sticky */
   background: #f8faf7;
+}
+
+
+/* ============ RESPONSIVE ============ */
+
+/* PC grande (1400px en adelante): el contenido queda centrado y no se estira sin límite */
+@media (min-width: 1400px) {
+  .pagina {
+    max-width: 2200px;
+    margin: 0 auto;
+  }
+}
+
+/* Móvil (hasta 480px): evita que el texto se agrande solo al girar el celular */
+@media (max-width: 480px) {
+  .pagina {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
 }

@@ -51,3 +51,96 @@
 .activo::after {
   width: 100%;
 }
+@media (hover: hover) {
+  .enlace:hover {
+    color: #2ee80d;
+    transform: translateY(-2px);
+  }
+
+  .enlace:hover::after {
+    width: 100%;
+  }
+}
+
+/* Enlace correspondiente a la página actual */
+.activo {
+  color: #2ee80d;
+}
+
+/* Línea permanente en el enlace activo */
+.activo::after {
+  width: 100%;
+}
+
+
+/* ============ RESPONSIVE ============ */
+
+/* PC grande (1400px en adelante) */
+@media (min-width: 1400px) {
+  .enlace {
+    font-size: 1rem;
+    letter-spacing: 0.07em;
+  }
+}
+
+/* Laptop (hasta 1366px): padding un poco menor */
+@media (max-width: 1366px) {
+  .enlace {
+    padding: 34px 0 29px;
+  }
+
+  .enlace::after {
+    bottom: 21px;
+  }
+}
+
+/* Tablet y móvil (hasta 1024px): enlaces dentro del menú desplegable */
+@media (max-width: 1024px) {
+  .enlace {
+    display: block;
+    width: fit-content;          /* la línea mide lo mismo que el texto */
+    padding: 16px 0;
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    white-space: normal;
+  }
+
+  .enlace::after {
+    bottom: 8px;
+  }
+
+  @media (hover: hover) {
+    .enlace:hover {
+      transform: translateX(4px); /* en el menú vertical se mueve de lado, no hacia arriba */
+    }
+  }
+}
+
+/* Móvil (hasta 480px) */
+@media (max-width: 480px) {
+  .enlace {
+    padding: 14px 0;
+    font-size: 1rem;
+    letter-spacing: 0.07em;
+  }
+
+  .enlace::after {
+    bottom: 6px;
+  }
+}
+
+/* Móvil muy pequeño (hasta 360px) */
+@media (max-width: 360px) {
+  .enlace {
+    font-size: 0.92rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* Respeta la preferencia de menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .enlace,
+  .enlace::after {
+    transition: none;
+  }
+}

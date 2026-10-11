@@ -1,14 +1,19 @@
 .placesSection {
-  padding: 10vh;
+  padding: clamp(50px, 10vh, 110px) clamp(16px, 5vw, 90px);
   background: #06194d;
 }
 
 .sectionHeader {
   display: grid;
   grid-template-columns: 1fr 0.7fr;
-  gap: 70px;
+  gap: clamp(30px, 5vw, 70px);
   align-items: end;
-  margin-bottom: 60px;
+  max-width: 1500px;                  /* en monitores muy anchos no se estira */
+  margin: 0 auto 60px;
+}
+
+.sectionHeader > * {
+  min-width: 0;                       /* evita desbordes dentro del grid */
 }
 
 .sectionHeader .eyebrow {
@@ -20,6 +25,7 @@
   color: #ffffff;
   font-size: clamp(2.4rem, 5vw, 4rem);
   line-height: 1.1;
+  overflow-wrap: break-word;
 }
 
 .sectionHeader p {
@@ -32,8 +38,10 @@
 
 .placesGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 28px;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 /*tarjetaa*/
@@ -50,10 +58,17 @@
       border-color .35s;
 }
 
-.placeCard:hover {
-  transform: translateY(-12px);
-  border-color: rgba(92,220,109,.5);
-  box-shadow: 0 30px 60px rgba(0,0,0,.35);
+/* Efectos hover solo con mouse (en celular se quedaban pegados al tocar) */
+@media (hover: hover) {
+  .placeCard:hover {
+    transform: translateY(-12px);
+    border-color: rgba(92,220,109,.5);
+    box-shadow: 0 30px 60px rgba(0,0,0,.35);
+  }
+
+  .placeCard:hover .coverImage {
+    transform: scale(1.08);
+  }
 }
 
 /*imaggen*/
@@ -77,13 +92,10 @@
   );
 }
 
-.placeCard:hover .coverImage {
-  transform: scale(1.08);
-}
-
 /*numero*/
 .cardNumber {
   position: absolute;
+  z-index: 1;                         /* queda encima del degradado */
   top: 18px;
   left: 18px;
   width: 42px;
@@ -93,6 +105,7 @@
   justify-content: center;
   border-radius: 50%;
   background: rgba(0,0,0,.45);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   color: white;
   font-size: .8rem;
@@ -103,6 +116,7 @@
 /*tipo*/
 .cardType {
   position: absolute;
+  z-index: 1;                         /* queda encima del degradado */
   right: 18px;
   bottom: 18px;
   padding: 8px 14px;
@@ -142,11 +156,191 @@
 /*pie*/
 .cardFooter {
   display: flex;
+  flex-wrap: wrap;                    /* si el texto no cabe, baja de línea */
   justify-content: space-between;
   align-items: center;
+  gap: 8px 14px;
   margin-top: 25px;
   padding-top: 18px;
   border-top: 1px solid rgba(255,255,255,.08);
   color: #d2dfdb;
   font-size: .82rem;
+}
+
+
+/* ============ RESPONSIVE ============ */
+
+/* PC grande (1400px en adelante) */
+@media (min-width: 1400px) {
+  .placesGrid {
+    gap: 34px;
+  }
+
+  .cardContent {
+    padding: 30px;
+  }
+
+  .cardContent p {
+    font-size: 1rem;
+  }
+}
+
+/* Laptop (hasta 1366px) */
+@media (max-width: 1366px) {
+  .sectionHeader {
+    margin-bottom: 50px;
+  }
+
+  .placesGrid {
+    gap: 22px;
+  }
+
+  .cardContent {
+    padding: 22px;
+  }
+}
+
+/* Laptop pequeña / tablet horizontal (hasta 1024px): 2 columnas */
+@media (max-width: 1024px) {
+  .sectionHeader {
+    grid-template-columns: 1fr;       /* título arriba, descripción debajo */
+    gap: 20px;
+    margin-bottom: 40px;
+    max-width: 760px;
+  }
+
+  .sectionHeader h2 {
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+  }
+
+  .placesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .cardContent p {
+    min-height: 0;                    /* con tarjetas más angostas el alto fijo sobra */
+  }
+}
+
+/* Tablet vertical (hasta 768px) */
+@media (max-width: 768px) {
+  .sectionHeader {
+    margin-bottom: 32px;
+  }
+
+  .placesGrid {
+    gap: 18px;
+  }
+
+  .placeCard {
+    border-radius: 20px;
+  }
+
+  .cardNumber {
+    top: 14px;
+    left: 14px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .cardType {
+    right: 14px;
+    bottom: 14px;
+    padding: 7px 12px;
+  }
+
+  .cardContent {
+    padding: 20px;
+  }
+
+  .cardFooter {
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+}
+
+/* Móvil (hasta 680px): 1 columna */
+@media (max-width: 680px) {
+  .placesGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 520px;                 /* una tarjeta no se estira demasiado */
+  }
+}
+
+/* Móvil (hasta 480px) */
+@media (max-width: 480px) {
+  .placesSection {
+    padding: 45px 16px;
+  }
+
+  .sectionHeader {
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .sectionHeader h2 {
+    margin-top: 12px;
+    font-size: 2rem;
+  }
+
+  .sectionHeader p {
+    font-size: .95rem;
+    line-height: 1.7;
+  }
+
+  .placeCard {
+    border-radius: 18px;
+  }
+
+  .cardContent {
+    padding: 18px;
+  }
+
+  .cardContent p {
+    font-size: .9rem;
+    line-height: 1.65;
+  }
+}
+
+/* Móvil muy pequeño (hasta 360px) */
+@media (max-width: 360px) {
+  .placesSection {
+    padding: 38px 12px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .cardContent {
+    padding: 16px;
+  }
+
+  .cardType {
+    font-size: .68rem;
+    letter-spacing: .06em;
+  }
+}
+
+/* Celular acostado (poca altura) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .placesSection {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+/* Respeta la preferencia de menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .placeCard,
+  .placeCard .coverImage {
+    transition: none;
+  }
+
+  .placeCard:hover,
+  .placeCard:hover .coverImage {
+    transform: none;
+  }
 }

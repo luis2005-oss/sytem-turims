@@ -115,3 +115,93 @@
         transform: translateY(7px);
     }
 }
+/* PC grande (1400px en adelante) */
+@media (min-width:1400px){
+    .hero{
+        max-width:680px;
+    }
+}
+
+/* Laptop (hasta 1366px) */
+@media (max-width:1366px){
+    .hero button{
+        padding:16px 38px;
+        font-size:17px;
+    }
+}
+
+/* Laptop pequeña / tablet horizontal (hasta 1024px) */
+@media (max-width:1024px){
+    .main{
+        background-position:60% center;
+    }
+    .hero{
+        max-width:520px;
+    }
+}
+
+/* Tablet vertical (hasta 768px) */
+@media (max-width:768px){
+    .main{
+        justify-content:center;
+        text-align:center;
+    }
+    .hero{
+        max-width:100%;
+    }
+    .linea{
+        margin-left:auto;
+        margin-right:auto;
+        margin-bottom:28px;
+    }
+    .hero p{
+        margin-left:auto;
+        margin-right:auto;
+        margin-bottom:35px;
+    }
+}
+
+/* Móvil (hasta 480px) */
+@media (max-width:480px){
+    .main{
+        padding:0 20px;
+    }
+    .subtitulo{
+        letter-spacing:3px;
+        margin-bottom:14px;
+    }
+    .linea{
+        width:90px;
+        height:3px;
+    }
+    .hero button{
+        width:100%;              /* botón cómodo para el dedo */
+        padding:16px 20px;
+        font-size:16px;
+    }
+}
+
+/* Móvil muy pequeño (hasta 360px) */
+@media (max-width:360px){
+    .hero h1{
+        font-size:38px;
+    }
+    .hero p{
+        font-size:15px;
+    }
+}
+
+/* Pantallas horizontales bajas (celular acostado) */
+@media (max-height:500px) and (orientation:landscape){
+    .main{
+        padding-top:20px;
+        padding-bottom:20px;
+    }
+    .hero h1{
+        font-size:40px;
+        margin-bottom:10px;
+    }
+    .hero p{
+        margin-bottom:20px;
+    }
+}

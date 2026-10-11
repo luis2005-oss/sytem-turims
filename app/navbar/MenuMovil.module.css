@@ -3,7 +3,7 @@
   top: 100%;
   left: 14px;
   right: 14px;
-  display: flex;
+  display: none;                      /* solo existe en tablet y móvil */
   flex-direction: column;
   max-height: 0;
   overflow: hidden;
@@ -24,7 +24,9 @@
 
 /* Estado abierto del menú móvil */
 .menuMovilAbierto {
-  max-height: 650px;
+  max-height: min(650px, calc(100dvh - 100px)); /* nunca más alto que la pantalla */
+  overflow-y: auto;                              /* si no cabe, se desplaza dentro del menú */
+  overscroll-behavior: contain;                  /* el scroll no se pasa a la página de fondo */
   padding: 18px 20px 22px;
   border-color: rgba(46, 232, 13, 0.25);
   opacity: 1;
@@ -55,7 +57,128 @@
   transform: none;
 }
 
+/* En este menú el enlace no se desplaza (arrastraría el borde inferior) */
+.menuMovil .enlace:hover {
+  transform: none;
+}
+
+/* La línea de hover respeta el padding lateral */
+.menuMovil .enlace:hover::after,
+.menuMovil .enlace:focus-visible::after {
+  width: calc(100% - 24px);
+}
+
 /* Línea del enlace activo en el menú móvil */
 .menuMovil .activo::after {
   width: 44px;
+}
+
+/* El último enlace no necesita borde */
+.menuMovil .enlace:last-child {
+  border-bottom: none;
+}
+
+
+/* ============ RESPONSIVE ============ */
+
+/* Tablet y móvil (hasta 1024px): el menú puede mostrarse */
+@media (max-width: 1024px) {
+  .menuMovil {
+    display: flex;
+  }
+}
+
+/* Tablet (de 769px a 1024px): panel angosto pegado a la derecha, no a todo el ancho */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .menuMovil {
+    left: auto;
+    right: 20px;
+    width: min(420px, calc(100% - 40px));
+  }
+
+  .menuMovil .enlace {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet vertical (hasta 768px) */
+@media (max-width: 768px) {
+  .menuMovil {
+    left: 14px;
+    right: 14px;
+  }
+}
+
+/* Móvil (hasta 480px) */
+@media (max-width: 480px) {
+  .menuMovil {
+    left: 10px;
+    right: 10px;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: 0 0 16px 16px;
+  }
+
+  .menuMovilAbierto {
+    padding: 12px 14px 16px;
+  }
+
+  .menuMovil .enlace {
+    padding: 15px 10px;
+    font-size: 0.92rem;
+  }
+
+  .menuMovil .enlace::after {
+    left: 10px;
+  }
+
+  .menuMovil .enlace:hover::after,
+  .menuMovil .enlace:focus-visible::after {
+    width: calc(100% - 20px);
+  }
+}
+
+/* Móvil muy pequeño (hasta 360px) */
+@media (max-width: 360px) {
+  .menuMovil {
+    left: 6px;
+    right: 6px;
+  }
+
+  .menuMovil .enlace {
+    padding: 14px 8px;
+    font-size: 0.88rem;
+  }
+
+  .menuMovil .enlace::after {
+    left: 8px;
+  }
+
+  .menuMovil .enlace:hover::after,
+  .menuMovil .enlace:focus-visible::after {
+    width: calc(100% - 16px);
+  }
+}
+
+/* Celular acostado (poca altura): enlaces más compactos para que quepan más */
+@media (max-height: 500px) and (orientation: landscape) {
+  .menuMovilAbierto {
+    max-height: calc(100dvh - 80px);
+  }
+
+  .menuMovil .enlace {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .menuMovil .enlace::after {
+    bottom: 4px;
+  }
+}
+
+/* Respeta la preferencia de menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .menuMovil {
+    transition: none;
+  }
 }

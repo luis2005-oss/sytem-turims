@@ -1,46 +1,111 @@
-
 .logoLink {
+  /* Medidas en variables: se cambian por tamaño de pantalla */
+  --logo-ancho: 120px;
+  --logo-alto: 100px;
+
   position: relative;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 120px;
-  height: 100px;
+  width: var(--logo-ancho);
+  height: var(--logo-alto);
+  margin-top: 2vh;
   background: transparent;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
   transition: transform 0.3s ease;
 }
 
-/* Animación del logo al pasar el cursor */
-.logoLink:hover {
-  transform: translateY(3px) scale(1.04);
+/* Animación del logo al pasar el cursor (solo con mouse) */
+@media (hover: hover) {
+  .logoLink:hover {
+    transform: translateY(3px) scale(1.04);
+  }
+}
+
+/* Accesibilidad con teclado */
+.logoLink:focus-visible {
+  outline: 2px solid #D4A017;
+  outline-offset: 4px;
+  border-radius: 8px;
 }
 
 /* Imagen del logo */
 .logoImagen {
   display: block;
-  width: 150px;
-  height: 105px;
+  width: 125%;                  /* equivale a los 150px originales sobre 120px */
+  height: 105%;                 /* equivale a los 105px originales sobre 100px */
+  max-width: none;
   object-fit: contain;
   background: transparent;
-  filter: drop-shadow(
-    0 7px 9px rgba(0, 0, 0, 0.55)
-  );
+  filter: drop-shadow(0 7px 9px rgba(0, 0, 0, 0.55));
 }
 
-.logoLink {
-  position: relative;
-  z-index: 10;
-  margin-top: 2vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 120px;
-  height: 100px;
-  background: transparent;
-  text-decoration: none;
-  transition: transform 0.3s ease;
+
+/* ============ RESPONSIVE ============ */
+
+/* PC grande (1400px en adelante) */
+@media (min-width: 1400px) {
+  .logoLink {
+    --logo-ancho: 135px;
+    --logo-alto: 112px;
+  }
+}
+
+/* Laptop (hasta 1366px) */
+@media (max-width: 1366px) {
+  .logoLink {
+    --logo-ancho: 110px;
+    --logo-alto: 92px;
+  }
+}
+
+/* Laptop pequeña / tablet horizontal (hasta 1024px) */
+@media (max-width: 1024px) {
+  .logoLink {
+    --logo-ancho: 95px;
+    --logo-alto: 80px;
+    margin-top: 0;              /* en el header con hamburguesa va alineado al centro */
+  }
+}
+
+/* Tablet vertical (hasta 768px) */
+@media (max-width: 768px) {
+  .logoLink {
+    --logo-ancho: 82px;
+    --logo-alto: 70px;
+  }
+
+  .logoImagen {
+    filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.5));
+  }
+}
+
+/* Móvil (hasta 480px) */
+@media (max-width: 480px) {
+  .logoLink {
+    --logo-ancho: 70px;
+    --logo-alto: 60px;
+  }
+
+  .logoImagen {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+  }
+}
+
+/* Móvil muy pequeño (hasta 360px) */
+@media (max-width: 360px) {
+  .logoLink {
+    --logo-ancho: 62px;
+    --logo-alto: 54px;
+  }
+}
+
+/* Respeta la preferencia de menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .logoLink {
+    transition: none;
+  }
 }

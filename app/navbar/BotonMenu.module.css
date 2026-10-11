@@ -37,3 +37,46 @@
 .botonMenuAbierto span:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
 }
+@media (max-width: 1024px) {
+  .botonMenu {
+    display: flex;
+  }
+}
+
+/* Tablet vertical (hasta 768px) */
+@media (max-width: 768px) {
+  .botonMenu {
+    width: 46px;
+    height: 44px;
+    border-radius: 11px;
+    --linea-ancho: 25px;
+  }
+}
+
+/* Móvil (hasta 480px) */
+@media (max-width: 480px) {
+  .botonMenu {
+    width: 44px;              /* mínimo cómodo para el dedo */
+    height: 44px;
+    border-radius: 10px;
+    --linea-ancho: 23px;
+    --linea-espacio: 5px;
+  }
+}
+
+/* Móvil muy pequeño (hasta 360px) */
+@media (max-width: 360px) {
+  .botonMenu {
+    width: 42px;
+    height: 42px;
+    --linea-ancho: 21px;
+  }
+}
+
+/* Reduce movimiento si el usuario lo pidió en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  .botonMenu,
+  .botonMenu span {
+    transition: none;
+  }
+}

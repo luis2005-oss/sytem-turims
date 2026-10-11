@@ -9,12 +9,59 @@
 .menuIzquierdo {
   grid-column: 1;
   justify-content: flex-end;
-  padding-right: 24px;
+  padding-right: clamp(12px, 1.6vw, 24px);
 }
 
 /* Enlaces del lado derecho, si se utilizan */
 .menuDerecho {
   grid-column: 3;
   justify-content: flex-start;
-  padding-left: 24px;
+  padding-left: clamp(12px, 1.6vw, 24px);
+}
+
+
+/* ============ RESPONSIVE ============ */
+
+/* PC grande (1400px en adelante) */
+@media (min-width: 1400px) {
+  .menuEscritorio {
+    gap: 38px;
+  }
+
+  .menuIzquierdo {
+    padding-right: 30px;
+  }
+
+  .menuDerecho {
+    padding-left: 30px;
+  }
+}
+
+/* Laptop (hasta 1366px) */
+@media (max-width: 1366px) {
+  .menuEscritorio {
+    gap: clamp(16px, 1.3vw, 22px);
+  }
+}
+
+/* Laptop pequeña (hasta 1180px): los enlaces van más juntos */
+@media (max-width: 1180px) {
+  .menuEscritorio {
+    gap: 14px;
+  }
+
+  .menuIzquierdo {
+    padding-right: 12px;
+  }
+
+  .menuDerecho {
+    padding-left: 12px;
+  }
+}
+
+/* Tablet y móvil (hasta 1024px): se oculta, lo reemplaza el botón hamburguesa */
+@media (max-width: 1024px) {
+  .menuEscritorio {
+    display: none;
+  }
 }

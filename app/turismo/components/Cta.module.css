@@ -1,6 +1,6 @@
 .cta {
   position: relative;
-  min-height: 560px;
+  min-height: clamp(420px, 60vh, 640px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +10,10 @@
 }
 
 .ctaImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   z-index: -2;
 }
@@ -30,11 +34,12 @@
 .ctaContent {
   width: min(820px, calc(100% - 50px));
   color: white;
-  padding: 90px 0;
+  padding: clamp(50px, 9vw, 90px) 0;
 }
 
 /*texto pequeño*/
 .ctaContent>span {
+  display: inline-block;
   color: #88e696;
   font-size: .8rem;
   font-weight: 800;
@@ -48,6 +53,7 @@
   font-size: clamp(3rem,6vw,5rem);
   line-height: 1;
   font-weight: 800;
+  overflow-wrap: break-word;
 }
 
 /*descripciones*/
@@ -63,6 +69,8 @@
 /*centrar boton*/
 .ctaContent .heroButtons {
   justify-content: center;
+  flex-wrap: wrap;                    /* si hay dos botones, bajan de línea en vez de salirse */
+  gap: 14px;
   margin-top: 35px;
 }
 
@@ -76,3 +84,145 @@
   transition: transform .6s ease;
 }
 
+
+/* ============ RESPONSIVE ============ */
+
+/* PC grande (1400px en adelante) */
+@media (min-width: 1400px) {
+  .ctaContent {
+    width: min(900px, calc(100% - 50px));
+  }
+
+  .ctaContent>p {
+    max-width: 700px;
+    font-size: 1.15rem;
+  }
+}
+
+/* Laptop (hasta 1366px) */
+@media (max-width: 1366px) {
+  .ctaContent h2 {
+    font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+  }
+}
+
+/* Laptop pequeña / tablet horizontal (hasta 1024px) */
+@media (max-width: 1024px) {
+  .cta {
+    min-height: 480px;
+  }
+
+  .ctaContent h2 {
+    font-size: clamp(2.4rem, 6.5vw, 3.6rem);
+  }
+
+  .ctaContent>p {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet vertical (hasta 768px) */
+@media (max-width: 768px) {
+  .cta {
+    min-height: 440px;
+  }
+
+  .ctaContent {
+    width: calc(100% - 40px);
+  }
+
+  .ctaContent h2 {
+    margin: 14px 0 16px;
+  }
+
+  .ctaContent>p {
+    line-height: 1.7;
+  }
+
+  .ctaContent .heroButtons {
+    margin-top: 28px;
+  }
+}
+
+/* Móvil (hasta 480px) */
+@media (max-width: 480px) {
+  .cta {
+    min-height: 400px;
+  }
+
+  .container {
+    width: calc(100% - 32px);         /* 16px por lado en vez de 24px */
+  }
+
+  .ctaContent {
+    width: calc(100% - 32px);
+    padding: 50px 0;
+  }
+
+  .ctaContent>span {
+    font-size: .72rem;
+    letter-spacing: .14em;
+  }
+
+  .ctaContent h2 {
+    font-size: 2.1rem;
+    line-height: 1.1;                 /* con letra más chica, un poco más de aire entre líneas */
+  }
+
+  .ctaContent>p {
+    font-size: .95rem;
+  }
+
+  .ctaContent .heroButtons {
+    flex-direction: column;           /* botones apilados, cómodos para el dedo */
+    align-items: stretch;
+    margin-top: 24px;
+  }
+}
+
+/* Móvil muy pequeño (hasta 360px) */
+@media (max-width: 360px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .ctaContent {
+    width: calc(100% - 24px);
+    padding: 42px 0;
+  }
+
+  .ctaContent h2 {
+    font-size: 1.8rem;
+  }
+
+  .ctaContent>p {
+    font-size: .9rem;
+  }
+}
+
+/* Celular acostado (poca altura) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .cta {
+    min-height: 0;
+  }
+
+  .ctaContent {
+    padding: 36px 0;
+  }
+
+  .ctaContent h2 {
+    font-size: 2rem;
+  }
+
+  .ctaContent .heroButtons {
+    flex-direction: row;              /* acostado hay ancho de sobra, los botones van en fila */
+    align-items: center;
+  }
+}
+
+/* Respeta la preferencia de menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .coverImage {
+    transition: none;
+  }
+}
