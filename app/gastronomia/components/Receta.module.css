@@ -1,0 +1,350 @@
+.contenedor {
+  /* Ajusta a la altura real de tu menú superior */
+  --altura-menu: 80px;
+
+  /* Paleta */
+  --crema: #fffaf3;
+  --marron-oscuro: #3b1d0a;
+  --marron-texto: #4a3426;
+  --ambar: #d97706;
+  --ambar-fuerte: #b45309;
+  --ambar-oscuro: #92400e;
+  --ambar-suave: #fef3c7;
+  --sombra: 0 0.4em 1.2em rgba(120, 53, 15, 0.12);
+
+  box-sizing: border-box;
+  height: 100dvh;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--altura-menu) + 0.25rem) clamp(0.75rem, 4vw, 3rem)
+    clamp(0.5rem, 1.5vh, 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.4rem, 1.2vh, 0.9rem);
+  overflow: hidden;
+  color: var(--marron-texto);
+
+  /* Fondo crema que cubre todo el ancho de la pantalla */
+  background: var(--crema);
+  box-shadow: 0 0 0 100vmax var(--crema);
+  clip-path: inset(0 -100vmax);
+
+  /* Tamaño base: se adapta al alto y ancho de la pantalla.
+     Todo lo demás usa "em", así que crece o se reduce junto con él. */
+  font-size: clamp(10px, min(1.9vh, 2.8vw), 17px);
+}
+
+/* ---------- Barra superior ---------- */
+.barra {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+
+.regresar {
+  padding: 0.4em 1em;
+  border: 1px solid var(--ambar-fuerte);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ambar-fuerte);
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 600;
+  box-shadow: var(--sombra);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.categoria {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.3em 0.9em;
+  border-radius: 999px;
+  background: var(--ambar-suave);
+  color: var(--ambar-oscuro);
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.categoria::before {
+  content: "";
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--ambar);
+}
+
+/* ---------- Encabezado ---------- */
+.encabezado {
+  flex-shrink: 0;
+}
+
+.titulo {
+  margin: 0 0 0.3em;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.2em;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--marron-oscuro);
+}
+
+.titulo::after {
+  content: "";
+  display: block;
+  width: 2.5em;
+  height: 0.18em;
+  margin-top: 0.3em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--ambar), var(--ambar-fuerte));
+}
+
+.descripcion {
+  margin: 0;
+  max-width: 80ch;
+  font-size: 1em;
+  line-height: 1.4;
+  color: #6b4a2f;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- Contenido (celular: imagen arriba, receta abajo) ---------- */
+.contenido {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 24% 1fr;
+  gap: 0.8em;
+}
+
+.imagenContenedor {
+  position: relative;
+  min-height: 0;
+  border-radius: 1.1em;
+  overflow: hidden;
+  box-shadow: 0 0.8em 1.8em rgba(120, 53, 15, 0.25);
+}
+
+.imagenContenedor::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.28), transparent 45%);
+  pointer-events: none;
+}
+
+.imagen {
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+/* ---------- Ingredientes y preparación ---------- */
+.detalle {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+}
+
+.bloque {
+  min-height: 0;
+  padding: 0.8em 1em;
+  background: #fff;
+  border-top: 0.25em solid var(--ambar);
+  border-radius: 1em;
+  box-shadow: var(--sombra);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ambar) transparent;
+}
+
+.bloque h2 {
+  margin: 0 0 0.55em;
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid #f3e3c7;
+  font-size: 1.05em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ambar-oscuro);
+}
+
+.bloque ul,
+.bloque ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bloque li {
+  position: relative;
+  margin-bottom: 0.45em;
+  font-size: 1em;
+  line-height: 1.35;
+}
+
+/* Viñetas de ingredientes */
+.bloque ul li {
+  padding-left: 1.3em;
+}
+
+.bloque ul li::before {
+  content: "";
+  position: absolute;
+  left: 0.2em;
+  top: 0.5em;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--ambar);
+}
+
+/* Pasos numerados en círculos */
+.bloque ol {
+  counter-reset: paso;
+}
+
+.bloque ol li {
+  counter-increment: paso;
+  padding-left: 2.2em;
+}
+
+.bloque ol li::before {
+  content: counter(paso);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  background: var(--ambar-fuerte);
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+/* ---------- Botones inferiores ---------- */
+.pie {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.botonLateral,
+.regresarAbajo,
+.botonSiguiente {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  padding: 0.6em 1.2em;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.botonLateral,
+.regresarAbajo {
+  border: 1px solid var(--ambar-fuerte);
+  background: #fff;
+  color: var(--ambar-fuerte);
+  box-shadow: var(--sombra);
+}
+
+.botonSiguiente {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, var(--ambar), var(--ambar-fuerte));
+  color: #fff;
+  box-shadow: 0 0.4em 1em rgba(180, 83, 9, 0.35);
+}
+
+/* Accesibilidad: borde visible al navegar con teclado */
+.regresar:focus-visible,
+.botonLateral:focus-visible,
+.regresarAbajo:focus-visible,
+.botonSiguiente:focus-visible {
+  outline: 3px solid var(--ambar);
+  outline-offset: 2px;
+}
+
+/* ---------- Celular pequeño: solo flechas en los botones laterales ---------- */
+@media (max-width: 480px) {
+  .textoNav {
+    display: none;
+  }
+
+  .bloque {
+    padding: 0.6em 0.7em;
+  }
+}
+
+/* ---------- Tablet: imagen a la izquierda, receta a la derecha ---------- */
+@media (min-width: 768px) {
+  .contenido {
+    grid-template-columns: 1fr 1.4fr;
+    grid-template-rows: 1fr;
+    gap: 1.2em;
+  }
+
+
+}
+
+/* ---------- Laptop y PC ---------- */
+@media (min-width: 1024px) {
+  .contenido {
+    grid-template-columns: 1fr 1.7fr;
+  }
+
+  .detalle {
+    grid-template-columns: 1fr 1.3fr;
+    gap: 1.2em;
+  }
+
+  .bloque {
+    padding: 1em 1.3em;
+  }
+}
+
+/* ---------- Hover solo con mouse ---------- */
+@media (hover: hover) {
+  .regresar:hover,
+  .regresarAbajo:hover,
+  .botonLateral:hover {
+    background: var(--ambar-fuerte);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .botonSiguiente:hover {
+    background: linear-gradient(135deg, var(--ambar-fuerte), var(--ambar-oscuro));
+    transform: translateY(-2px);
+    box-shadow: 0 0.6em 1.2em rgba(146, 64, 14, 0.4);
+  }
+
+  .imagenContenedor:hover .imagen {
+    transform: scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imagen,
+  .regresar,
+  .botonLateral,
+  .regresarAbajo,
+  .botonSiguiente {
+    transition: none;
+  }
+}
