@@ -166,9 +166,27 @@
   font-size: .82rem;
 }
 
+.locationLink {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+color: #176b52;
+font-size: 0.9rem;
+font-weight: 700;
+text-decoration: none;
+transition: color 0.25s ease, transform 0.25s ease;
+}
 
+.locationLink:hover {
+color: #b58a4f;
+transform: translateY(-2px);
+}
 
-
+.locationLink:focus-visible {
+outline: 2px solid #b58a4f;
+outline-offset: 4px;
+border-radius: 3px;
+}
 
 
 .coverImage {

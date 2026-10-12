@@ -36,11 +36,20 @@ export default function Lugares() {
 
               <div className={styles.cardContent}>
                 <span className={styles.cardZone}> {lugar.zona}</span>
-                <h3>{lugar.nombre}</h3>
                 <p>{lugar.descripcion}</p>
 
                 <div className={styles.cardFooter}>
-                  <span> {lugar.distancia}</span>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lugar.ubicacion)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.locationLink}
+                    aria-label={`Ver ubicación de ${lugar.nombre} en Google Maps`}
+                  >
+                    <span aria-hidden="true">📍</span>
+                    Ver ubicación en Maps
+                    <span aria-hidden="true">↗</span>
+                  </a>
                 </div>
               </div>
             </article>
