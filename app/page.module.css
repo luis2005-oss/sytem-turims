@@ -1,102 +1,109 @@
-.main{
-    width:100%;
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    padding:0 90px;
+.main {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: clamp(2rem, 6vw, 5.625rem);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     background-image:
-    linear-gradient(
-        rgba(0,0,0,.60),
-        rgba(0,0,0,.40),
-        rgba(0,0,0,.60)
-    ),
-    url("/fondocelendin.png");
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
+        linear-gradient(90deg,
+            rgba(0, 0, 0, 0.72) 0%,
+            rgba(0, 0, 0, 0.48) 48%,
+            rgba(0, 0, 0, 0.18) 100%),
+        linear-gradient(0deg,
+            rgba(0, 0, 0, 0.28),
+            transparent 45%,
+            rgba(0, 0, 0, 0.12)),
+        url("/fondocelendin.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* CONTENEDOR */
+/* CONTENIDO */
 
 .hero {
-    width: 600px;
-    color: white;
-    animation: entrance 1.2s ease both;
+    width: 100%;
+    max-width: 42.5rem;
+    color: #fff;
+    animation: entrance 1s ease both;
+}
+
+.subtitulo {
+    display: block;
+    margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+    color: #e0b43c;
+    font-size: clamp(0.75rem, 1.2vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: clamp(0.12rem, 0.55vw, 0.5rem);
+    line-height: 1.5;
+}
+
+.hero h1 {
+    margin: 0 0 clamp(1rem, 2vw, 1.5rem);
+    font-family: "Poppins", sans-serif;
+    font-size: clamp(2.75rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+}
+
+.linea {
+    width: clamp(4.75rem, 9vw, 7.5rem);
+    height: 0.25rem;
+    margin-bottom: clamp(1.25rem, 3vw, 2.125rem);
+    border-radius: 999px;
+    background: #d4a017;
+}
+
+.hero p {
+    max-width: 33.75rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: clamp(1rem, 2.2vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1.55;
+    text-wrap: pretty;
 }
 
 
-/* BIENVENIDOS A */
-
-.subtitulo{
-    display:block;
-    color:#D4A017;
-    font-size:22px;
-    font-weight:700;
-    letter-spacing:8px;
-    margin-bottom:20px;
+.hero button {
+    min-height: 3rem;
+    margin-top: 1.75rem;
+    padding: 0.875rem 2rem;
+    border: 0;
+    border-radius: 999px;
+    background: #d4a017;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background-color 0.25s ease,
+        transform 0.25s ease;
 }
 
-
-/* TITULO */
-
-.hero h1{
-    font-size:92px;
-    font-weight:800;
-    line-height:90px;
-    margin-bottom:20px;
-    font-family:'Poppins',sans-serif;
+.hero button:hover {
+    background: #b8890d;
+    transform: translateY(-0.125rem);
 }
 
-
-/* LINEA */
-
-.linea{
-    width:120px;
-    height:4px;
-    background:#D4A017;
-    border-radius:10px;
-    margin-bottom:35px;
+.hero button:focus-visible {
+    outline: 0.1875rem solid #fff;
+    outline-offset: 0.25rem;
 }
 
-
-/* DESCRIPCION */
-
-.hero p{
-    font-size:26px;
-    line-height:40px;
-    color:#EEEEEE;
-    margin-bottom:45px;
-    max-width:520px;
-}
-
-
-/* BOTON */
-
-.hero button{
-    padding:18px 42px;
-    border:none;
-    border-radius:50px;
-    background:#D4A017;
-    color:white;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    transition:.4s;
-}
-
-.hero button:hover{
-    background:#2A9DF4;
-    transform:translateY(-5px);
-}
-
-
-/* ANIMACIONES */
+/* ANIMACIÓN */
 
 @keyframes entrance {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(1.375rem);
     }
 
     to {
@@ -105,103 +112,61 @@
     }
 }
 
-@keyframes floating {
-    0%,
-    100% {
-    transform: translateY(0);
-    }
+/*Responsive*/
 
-    50% {
-        transform: translateY(7px);
-    }
-}
-/* PC grande (1400px en adelante) */
-@media (min-width:1400px){
-    .hero{
-        max-width:680px;
-    }
+.main {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 90px clamp(20px, 6vw, 90px) 40px;
 }
 
-/* Laptop (hasta 1366px) */
-@media (max-width:1366px){
-    .hero button{
-        padding:16px 38px;
-        font-size:17px;
-    }
+.hero {
+    width: 100%;
+    max-width: 600px;
 }
 
-/* Laptop pequeña / tablet horizontal (hasta 1024px) */
-@media (max-width:1024px){
-    .main{
-        background-position:60% center;
-    }
-    .hero{
-        max-width:520px;
-    }
+.hero h1 {
+    font-size: clamp(2.6rem, 11vw, 5.75rem);
+    line-height: 1;
 }
 
-/* Tablet vertical (hasta 768px) */
-@media (max-width:768px){
-    .main{
-        justify-content:center;
-        text-align:center;
-    }
-    .hero{
-        max-width:100%;
-    }
-    .linea{
-        margin-left:auto;
-        margin-right:auto;
-        margin-bottom:28px;
-    }
-    .hero p{
-        margin-left:auto;
-        margin-right:auto;
-        margin-bottom:35px;
+.hero p {
+    font-size: clamp(1.05rem, 2.6vw, 1.6rem);
+    line-height: 1.55;
+    max-width: 520px;
+}
+
+.subtitulo {
+    font-size: clamp(0.95rem, 3vw, 1.4rem);
+    letter-spacing: clamp(3px, 1vw, 8px);
+}
+
+@media (min-width: 1400px) {
+    .hero {
+        max-width: 680px;
     }
 }
 
-/* Móvil (hasta 480px) */
-@media (max-width:480px){
-    .main{
-        padding:0 20px;
-    }
-    .subtitulo{
-        letter-spacing:3px;
-        margin-bottom:14px;
-    }
-    .linea{
-        width:90px;
-        height:3px;
-    }
-    .hero button{
-        width:100%;              /* botón cómodo para el dedo */
-        padding:16px 20px;
-        font-size:16px;
+@media (max-width: 768px) {
+    .hero p {
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
-/* Móvil muy pequeño (hasta 360px) */
-@media (max-width:360px){
-    .hero h1{
-        font-size:38px;
-    }
-    .hero p{
-        font-size:15px;
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: clamp(2.4rem, 13vw, 3.2rem);
     }
 }
 
-/* Pantallas horizontales bajas (celular acostado) */
-@media (max-height:500px) and (orientation:landscape){
-    .main{
-        padding-top:20px;
-        padding-bottom:20px;
+@media (max-height: 500px) and (orientation: landscape) {
+    .main {
+        padding-top: 76px;
     }
-    .hero h1{
-        font-size:40px;
-        margin-bottom:10px;
-    }
-    .hero p{
-        margin-bottom:20px;
+
+    .hero h1 {
+        font-size: 2.4rem;
     }
 }

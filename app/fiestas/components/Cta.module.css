@@ -57,3 +57,43 @@
 .ctaContent .heroButtons {
   justify-content: center;
 }
+
+/* ===== RESPONSIVO ===== */
+
+.ctaContent h2 {
+  font-size: clamp(2.3rem, 7vw, 5.7rem);
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .cta { min-height: 460px; }
+  .ctaContent {
+    width: calc(100% - 40px);
+    padding: 65px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta { min-height: 420px; }
+  .ctaContent {
+    width: calc(100% - 32px);
+    padding: 50px 0;
+  }
+  .ctaContent > span {
+    font-size: .7rem;
+    letter-spacing: .13em;
+  }
+  .ctaContent > p {
+    font-size: .95rem;
+    line-height: 1.7;
+  }
+  .ctaContent .heroButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .cta { min-height: 0; }
+  .ctaContent { padding: 36px 0; }
+}

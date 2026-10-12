@@ -161,3 +161,247 @@
   color: #f5bf60;
   animation: floating 1.8s ease-in-out infinite;
 }
+
+/* ===== ANIMACIONES  ===== */
+
+@keyframes entrance {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+/* ===== RESPONSIVO ===== */
+
+@media (min-width: 1400px) {
+  .hero {
+    height: 85vh;
+    height: 85svh;
+    min-height: 650px;
+    max-height: 1000px;
+  }
+
+  .heroContent {
+    width: min(1280px, calc(100% - 96px));
+    padding-top: 70px;
+    padding-bottom: 40px;
+  }
+
+  .heroContent h1 {
+    font-size: clamp(4.5rem, 7vw, 7.7rem);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1399px) {
+  .hero {
+    height: 85vh;
+    height: 85svh;
+    min-height: 580px;
+    max-height: 900px;
+  }
+
+  .heroContent {
+    width: min(1180px, calc(100% - 64px));
+    padding-top: 65px;
+    padding-bottom: 35px;
+  }
+
+  .heroContent h1 {
+    font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+    line-height: 0.95;
+  }
+
+  .heroContent p {
+    max-width: 600px;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    margin-top: 22px;
+  }
+
+  .heroButtons {
+    margin-top: 28px;
+  }
+}
+
+@media (min-width: 769px) and (max-height: 800px) {
+  .hero {
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .heroContent {
+    padding-top: 90px;
+    padding-bottom: 45px;
+  }
+
+  .heroContent h1 {
+    font-size: clamp(3rem, 5vw, 4.8rem);
+    line-height: 0.98;
+    margin-top: 18px;
+  }
+
+  .heroContent p {
+    font-size: 1rem;
+    line-height: 1.55;
+    margin-top: 18px;
+  }
+
+  .heroButtons {
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    max-height: none;
+    padding: 0;
+    align-items: center;
+  }
+
+  .heroImage {
+    object-position: 60% center;
+  }
+
+  .heroOverlay {
+    background: linear-gradient(
+      180deg,
+      rgba(30, 8, 12, 0.65) 0%,
+      rgba(36, 10, 15, 0.80) 55%,
+      rgba(24, 7, 10, 0.92) 100%
+    );
+  }
+
+  .heroContent {
+    width: calc(100% - 40px);
+    padding: 85px 0 65px;
+  }
+
+  .heroContent h1 {
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    line-height: 0.98;
+  }
+
+  .heroContent p {
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-top: 20px;
+  }
+
+  .heroButtons {
+    margin-top: 25px;
+  }
+
+  .heroGlow {
+    width: 400px;
+    height: 400px;
+    left: -180px;
+    bottom: -200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+  }
+
+  .heroContent {
+    width: calc(100% - 32px);
+    padding: 75px 0 55px;
+  }
+
+  .heroTag {
+    gap: 9px;
+    font-size: 0.68rem;
+    letter-spacing: 0.10em;
+  }
+
+  .heroTag::before {
+    width: 26px;
+  }
+
+  .heroContent h1 {
+    font-size: clamp(2.7rem, 12vw, 3.6rem);
+    line-height: 0.98;
+    margin-top: 18px;
+  }
+
+  .heroContent p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-top: 18px;
+  }
+
+  .heroButtons {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .primaryButton {
+    width: 100%;
+    min-height: 50px;
+    padding: 0 20px;
+  }
+
+  .heroGlow {
+    width: 260px;
+    height: 260px;
+    left: -130px;
+    bottom: -130px;
+    filter: blur(60px);
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    height: auto;
+    min-height: 100svh;
+    max-height: none;
+    padding: 0;
+  }
+
+  .heroContent {
+    padding-top: 75px;
+    padding-bottom: 35px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.6rem;
+  }
+
+  .heroContent p {
+    margin-top: 14px;
+  }
+
+  .heroButtons {
+    flex-direction: row;
+    margin-top: 20px;
+  }
+
+  .primaryButton {
+    width: auto;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .heroContent,
+  .scrollButton span {
+    animation: none;
+  }
+
+  .primaryButton {
+    transition: none;
+  }
+}

@@ -1,80 +1,78 @@
 .botonMenu {
   display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   width: 49px;
   height: 47px;
-  padding: 9px;
+  padding: 8px;
   border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.22);
   cursor: pointer;
+  position: relative;
+  z-index: 1001;
 }
 
-/* Las tres líneas del botón */
 .botonMenu span {
   display: block;
-  width: 27px;
+  width: 25px;
   height: 2px;
-  margin: 6px auto;
+  margin: 3px auto;
+  flex-shrink: 0;
   border-radius: 10px;
-  background: #ffffff;
+  background-color: #ffffff;
   transition:
     opacity 0.25s ease,
     transform 0.25s ease;
 }
 
-/* Primera línea: parte superior de la X */
 .botonMenuAbierto span:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
 
-/* Segunda línea: desaparece al abrir el menú */
 .botonMenuAbierto span:nth-child(2) {
   opacity: 0;
 }
 
-/* Tercera línea: parte inferior de la X */
 .botonMenuAbierto span:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
 }
-@media (max-width: 1024px) {
-  .botonMenu {
-    display: flex;
-  }
-}
 
-/* Tablet vertical (hasta 768px) */
 @media (max-width: 768px) {
   .botonMenu {
+    display: flex;
     width: 46px;
     height: 44px;
-    border-radius: 11px;
-    --linea-ancho: 25px;
   }
 }
 
-/* Móvil (hasta 480px) */
 @media (max-width: 480px) {
   .botonMenu {
-    width: 44px;              /* mínimo cómodo para el dedo */
+    width: 44px;
     height: 44px;
-    border-radius: 10px;
-    --linea-ancho: 23px;
-    --linea-espacio: 5px;
+    padding: 6px;
+  }
+
+  .botonMenu span {
+    width: 23px;
   }
 }
 
-/* Móvil muy pequeño (hasta 360px) */
 @media (max-width: 360px) {
   .botonMenu {
     width: 42px;
     height: 42px;
-    --linea-ancho: 21px;
+  }
+
+  .botonMenu span {
+    width: 21px;
   }
 }
 
-/* Reduce movimiento si el usuario lo pidió en su sistema */
 @media (prefers-reduced-motion: reduce) {
+
   .botonMenu,
   .botonMenu span {
     transition: none;

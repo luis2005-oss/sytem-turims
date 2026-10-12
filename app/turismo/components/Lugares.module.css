@@ -8,12 +8,12 @@
   grid-template-columns: 1fr 0.7fr;
   gap: clamp(30px, 5vw, 70px);
   align-items: end;
-  max-width: 1500px;                  /* en monitores muy anchos no se estira */
+  max-width: 1500px;
   margin: 0 auto 60px;
 }
 
 .sectionHeader > * {
-  min-width: 0;                       /* evita desbordes dentro del grid */
+  min-width: 0;
 }
 
 .sectionHeader .eyebrow {
@@ -58,7 +58,6 @@
       border-color .35s;
 }
 
-/* Efectos hover solo con mouse (en celular se quedaban pegados al tocar) */
 @media (hover: hover) {
   .placeCard:hover {
     transform: translateY(-12px);
@@ -95,7 +94,7 @@
 /*numero*/
 .cardNumber {
   position: absolute;
-  z-index: 1;                         /* queda encima del degradado */
+  z-index: 1;
   top: 18px;
   left: 18px;
   width: 42px;
@@ -116,7 +115,7 @@
 /*tipo*/
 .cardType {
   position: absolute;
-  z-index: 1;                         /* queda encima del degradado */
+  z-index: 1;
   right: 18px;
   bottom: 18px;
   padding: 8px 14px;
@@ -156,7 +155,7 @@
 /*pie*/
 .cardFooter {
   display: flex;
-  flex-wrap: wrap;                    /* si el texto no cabe, baja de línea */
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 8px 14px;
@@ -166,6 +165,42 @@
   color: #d2dfdb;
   font-size: .82rem;
 }
+
+
+
+
+
+
+.coverImage {
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+
+.container {
+  width: 100%;
+}
+
+/* Etiqueta superior (antes solo tenía el color) */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: .80rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  flex-shrink: 0;
+  width: 36px;
+  height: 2px;
+  border-radius: 50px;
+  background: #55d665;
+}
+
+
 
 
 /* ============ RESPONSIVE ============ */
@@ -274,6 +309,14 @@
   .placesSection {
     padding: 45px 16px;
   }
+
+  .eyebrow {
+    gap: 10px;
+    font-size: .72rem;
+    letter-spacing: .13em;
+  }
+
+  .eyebrow::before { width: 28px; }
 
   .sectionHeader {
     gap: 14px;

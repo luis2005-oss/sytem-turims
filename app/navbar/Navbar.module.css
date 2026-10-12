@@ -1,28 +1,27 @@
 .header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 1000;
   width: 100%;
   height: 76px;
-  overflow: visible;                 /* el logo sobresale por debajo del header */
-  background: rgba(0, 0, 0, 0.55);   /* tu degradado tenía el mismo color en todos los puntos */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0;
+  overflow: visible;
+  background: rgba(0, 0, 0, 0.22);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
-/* 2. CONTENEDOR INTERIOR DEL NAVBAR
-    Organiza el logo, los enlaces y el botón hamburguesa.*/
 .navbar {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1920px;                 /* en monitores muy anchos el contenido no se estira */
+  max-width: 1920px;
   height: 100%;
   margin: 0 auto;
   padding: 0 clamp(16px, 3.5vw, 50px);
@@ -30,38 +29,37 @@
   box-sizing: border-box;
 }
 
+.navbar>* {
+  flex-shrink: 0;
+}
+
 
 /* ============ RESPONSIVE ============ */
 
-/* PC grande (1400px en adelante) */
 @media (min-width: 1400px) {
   .header {
     height: 84px;
   }
 }
 
-/* Laptop (hasta 1366px) */
 @media (max-width: 1366px) {
   .header {
     height: 74px;
   }
 }
 
-/* Laptop pequeña / tablet horizontal (hasta 1024px): aparece la hamburguesa */
 @media (max-width: 1024px) {
   .header {
     height: 70px;
   }
 }
 
-/* Tablet vertical (hasta 768px) */
 @media (max-width: 768px) {
   .header {
     height: 66px;
   }
 }
 
-/* Móvil (hasta 480px) */
 @media (max-width: 480px) {
   .header {
     height: 62px;
@@ -72,7 +70,6 @@
   }
 }
 
-/* Móvil muy pequeño (hasta 360px) */
 @media (max-width: 360px) {
   .header {
     height: 58px;
@@ -83,17 +80,14 @@
   }
 }
 
-/* Celular acostado (poca altura): header más bajo para no tapar el contenido */
 @media (max-height: 500px) and (orientation: landscape) {
   .header {
     height: 56px;
   }
 }
 
-/* 11. ACCESIBILIDAD
-    Reducir animaciones si el usuario lo solicita en su sistema. */
-
 @media (prefers-reduced-motion: reduce) {
+
   .enlace,
   .enlace::after,
   .logoLink,

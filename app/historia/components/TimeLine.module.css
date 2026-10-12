@@ -1,48 +1,92 @@
-.center{
+.center {
     text-align: center;
     margin-bottom: 60px;
 }
 
-.timelineSection{
+.timelineSection {
     background: white;
     padding: 10vh;
 }
 
-.timeline{
+.timeline {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 25px;
 }
 
-.card{
+.card {
     background: white;
     padding: 35px;
     border-radius: 15px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
     transition: .4s;
     border-top: 5px solid #37e20c;
 }
 
-.card:hover{
+.card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .15);
 }
 
-.card span{
+.card span {
     color: #37e20c;
     font-weight: bold;
     display: block;
     margin-bottom: 15px;
 }
 
-.card h3{
+.card h3 {
     margin-bottom: 15px;
     color: #0d4f3c;
 }
 
-.card p{
+.card p {
     font-size: 16px;
     line-height: 28px;
     text-align: center;
+}
+
+/* ===== RESPONSIVO ===== */
+
+.timelineSection {
+    padding: clamp(50px, 10vh, 110px) clamp(16px, 5vw, 90px);
+}
+
+.center {
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+}
+
+.timeline>* {
+    min-width: 0;
+}
+
+@media (max-width: 1180px) {
+    .timeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .timeline {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .center {
+        margin-bottom: 36px;
+    }
+
+    .card {
+        padding: 26px 22px;
+    }
+}
+
+@media (hover: none) {
+    .card:hover {
+        transform: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    }
 }

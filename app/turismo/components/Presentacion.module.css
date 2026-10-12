@@ -14,16 +14,13 @@
   grid-template-columns: 1fr .95fr;
   gap: clamp(40px, 5.5vw, 80px);
   align-items: center;
-  max-width: 1500px;                  /* en monitores muy anchos no se estira */
+  max-width: 1500px;
   margin: 0 auto;
 }
 
-/* Evita que el contenido desborde su columna */
 .presentationGrid > * {
   min-width: 0;
 }
-
-/*etiqueta superior*/
 
 .eyebrow {
   display: inline-flex;
@@ -65,7 +62,7 @@
   font-size: 1.03rem;
   line-height: 1.85;
   text-align: justify;
-  hyphens: auto;                      /* reduce los huecos del texto justificado */
+  hyphens: auto;
 }
 
 /*estadisticas*/
@@ -115,7 +112,7 @@
   position:absolute;
   right:25px;
   bottom:25px;
-  max-width: calc(100% - 50px);       /* nunca se sale de la imagen */
+  max-width: calc(100% - 50px);
   padding:18px 22px;
   display:flex;
   align-items:center;
@@ -193,7 +190,7 @@
 
 /*icono*/
 .experienceIcon{
-  flex-shrink: 0;                     /* el icono no se aplasta cuando falta espacio */
+  flex-shrink: 0;
   width: 60px;
   height: 60px;
   border-radius: 16px;
@@ -224,7 +221,6 @@
 
 /* ============ RESPONSIVE ============ */
 
-/* PC grande (1400px en adelante) */
 @media (min-width: 1400px) {
   .presentationImage {
     min-height: 600px;
@@ -239,7 +235,6 @@
   }
 }
 
-/* Laptop (hasta 1366px) */
 @media (max-width: 1366px) {
   .presentationImage {
     min-height: 480px;
@@ -261,14 +256,12 @@
   }
 }
 
-/* Laptop pequeña (hasta 1180px): las tarjetas pasan a 2 columnas */
 @media (max-width: 1180px) {
   .experienceGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* Tablet horizontal (hasta 1024px): presentación en una columna */
 @media (max-width: 1024px) {
   .presentationGrid {
     grid-template-columns: 1fr;
@@ -278,7 +271,7 @@
 
   .presentationImage {
     min-height: 0;
-    aspect-ratio: 16 / 10;            /* la imagen mantiene proporción sin alto fijo */
+    aspect-ratio: 16 / 10;
   }
 
   .presentationText h2 {
@@ -290,7 +283,6 @@
   }
 }
 
-/* Tablet vertical (hasta 768px) */
 @media (max-width: 768px) {
   .presentationGrid {
     gap: 35px;
@@ -308,7 +300,7 @@
   .presentationText p {
     font-size: 1rem;
     line-height: 1.75;
-    text-align: left;                 /* el texto justificado deja huecos en pantallas angostas */
+    text-align: left;
     hyphens: none;
   }
 
@@ -337,7 +329,15 @@
   }
 }
 
-/* Móvil (hasta 600px): tarjetas de experiencia en una columna */
+.coverImage {
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+
+.container {
+  width: 100%;
+}
+
 @media (max-width: 600px) {
   .experienceGrid {
     grid-template-columns: 1fr;
@@ -345,7 +345,6 @@
   }
 }
 
-/* Móvil (hasta 480px) */
 @media (max-width: 480px) {
   .presentation {
     padding: 45px 16px;
@@ -380,7 +379,6 @@
     width: 28px;
   }
 
-  /* Estadísticas en una columna, con el número a la izquierda y el texto a la derecha */
   .presentationStats {
     grid-template-columns: 1fr;
     margin-top: 26px;
@@ -436,7 +434,6 @@
   }
 }
 
-/* Móvil muy pequeño (hasta 360px) */
 @media (max-width: 360px) {
   .presentation {
     padding: 38px 12px;
@@ -462,7 +459,6 @@
   }
 }
 
-/* Celular acostado (poca altura) */
 @media (max-height: 500px) and (orientation: landscape) {
   .presentation {
     padding-top: 40px;
@@ -474,7 +470,6 @@
   }
 }
 
-/* Respeta la preferencia de menos movimiento */
 @media (prefers-reduced-motion: reduce) {
   .presentationStats div,
   .experienceCard,
