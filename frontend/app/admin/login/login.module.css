@@ -1,0 +1,101 @@
+.pagina {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 120px 16px 50px; /* deja espacio para el navbar flotante */
+  background:
+    radial-gradient(circle at 10% 10%, rgba(90, 230, 46, 0.14), transparent 35%),
+    #0d2a21;
+}
+
+.tarjeta {
+  width: min(440px, 100%);
+  padding: clamp(26px, 5vw, 40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+}
+
+.etiqueta {
+  display: inline-block;
+  color: #5ae62e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tarjeta h1 {
+  margin: 12px 0 8px;
+  font-size: clamp(1.7rem, 5vw, 2.1rem);
+  line-height: 1.1;
+}
+
+.tarjeta > p {
+  margin-bottom: 26px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+}
+
+.formulario {
+  display: grid;
+  gap: 8px;
+}
+
+.formulario label {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.formulario input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.formulario input:focus-visible {
+  outline: 2px solid #5ae62e;
+  outline-offset: 2px;
+}
+
+.formulario button {
+  min-height: 52px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 999px;
+  background: #5ae62e;
+  color: #103529;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.formulario button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (hover: hover) {
+  .formulario button:not(:disabled):hover {
+    transform: translateY(-3px);
+  }
+}
+
+.error {
+  margin-top: 6px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 90, 90, 0.16);
+  color: #ffb4b4;
+  font-size: 0.9rem;
+}

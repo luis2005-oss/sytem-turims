@@ -41,3 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 app-backup-letras-*/
+
+# permitir los ejemplos de variables de entorno
+!.env.local.example

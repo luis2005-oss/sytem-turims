@@ -48,7 +48,7 @@ export default function Introduccion() {
               src="/images/fiestas/cristi.jpg"
               alt="Plaza de Armas de Celendín"
               fill
-              sizes="(max-width:900px) 100vw,48vw"
+              sizes="(max-width: 768px) 100vw, 50vw"
               className={styles.coverImage}
             />
 

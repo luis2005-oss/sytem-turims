@@ -25,6 +25,7 @@ export default function Actividades() {
                   src={actividad.imagen}
                   alt={actividad.titulo}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className={styles.coverImage}
                 />
               </div>

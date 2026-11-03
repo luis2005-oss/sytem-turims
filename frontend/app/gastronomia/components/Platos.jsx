@@ -32,6 +32,7 @@ export default function Platos() {
                 src={plato.imagen}
                 alt={plato.nombre}
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className={styles.imagen}
               />
 
