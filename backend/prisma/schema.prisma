@@ -11,7 +11,7 @@ model Admin {
   id        Int      @id @default(autoincrement())
   nombre    String
   email     String   @unique
-  password  String   // hash bcrypt, nunca la contraseña en texto plano
+  password  String // hash bcrypt, nunca la contraseña en texto plano
   createdAt DateTime @default(now())
 }
 

@@ -1,0 +1,27 @@
+{
+  "name": "sytem-turims",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\"",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luis2005-oss/sytem-turims.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/luis2005-oss/sytem-turims/issues"
+  },
+  "homepage": "https://github.com/luis2005-oss/sytem-turims#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.7"
+  }
+}
