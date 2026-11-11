@@ -34,10 +34,6 @@ export default function Hero() {
           <a href="#lugares" className={styles.primaryButton}>
             Ver lugares turísticos
           </a>
-
-          <Link href="/galeria" className={styles.secondaryButton}>
-            Explorar galería
-          </Link>
         </div>
       </div>
     </section>
