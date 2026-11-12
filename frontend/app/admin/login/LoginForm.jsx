@@ -30,7 +30,7 @@ export default function LoginForm() {
       const resultado = await respuesta.json().catch(() => ({}));
 
       if (!respuesta.ok) {
-        setError(resultado.error || "No se pudo iniciar sesión.");
+        setError(resultado.error || "Correo o contraseña incorrectos.");
         setPendiente(false);
         return;
       }
