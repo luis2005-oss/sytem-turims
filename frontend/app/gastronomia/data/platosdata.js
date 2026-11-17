@@ -1,4 +1,4 @@
-export const platos = [
+const platosBase = [
   {
     nombre: "Caldo Verde",
     categoria: "Sopa tradicional",
@@ -231,3 +231,36 @@ export const platos = [
     ],
   },
 ];
+
+const SLUGS = {
+  "Caldo Verde": "caldo-verde",
+  "Cuy Frito": "cuy-frito",
+  "Chicharrón con Mote": "chicharron-con-mote",
+  "Humitas": "humitas",
+  "Tamales": "tamales",
+  "Queso Cajamarquino": "queso-cajamarquino",
+  "Quesillo con Miel": "quesillo-con-miel",
+  "Manjar Blanco": "manjar-blanco",
+  "Rosquitas": "rosquitas",
+};
+
+// Cambia estos nombres por tus lugares turísticos reales.
+// Los platos con el mismo texto quedan agrupados juntos.
+const LUGARES = {
+  "Caldo Verde": "Mercado Central de Celendín",
+  "Cuy Frito": "Plaza de Armas de Celendín",
+  "Chicharrón con Mote": "Plaza de Armas de Celendín",
+  "Humitas": "Mercado Central de Celendín",
+  "Tamales": "Mercado Central de Celendín",
+  "Queso Cajamarquino": "Mercado Central de Celendín",
+  "Quesillo con Miel": "Plaza de Armas de Celendín",
+  "Manjar Blanco": "Plaza de Armas de Celendín",
+  "Rosquitas": "Plaza de Armas de Celendín",
+};
+
+export const platos = platosBase.map((p) => ({
+  ...p,
+  slug: SLUGS[p.nombre],
+  lugar: LUGARES[p.nombre],
+  receta: { ingredientes: p.ingredientes, pasos: p.preparacion },
+}));

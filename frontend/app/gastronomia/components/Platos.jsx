@@ -1,16 +1,12 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./Platos.module.css";
 import { platos } from "../data/platosdata";
-import RecetaModal from "./RecetaModal";
+import BotonFavorito from "./BotonFavorito";
+
+const lugares = [...new Set(platos.map((p) => p.lugar))];
 
 export default function Platos() {
-  const [platoActivo, setPlatoActivo] = useState(null);
-
-  const cerrarReceta = () => setPlatoActivo(null);
-
   return (
     <section id="platos" className={styles.seccionPlatos}>
       <div className={styles.encabezado}>
@@ -22,41 +18,50 @@ export default function Platos() {
           Conoce algunas de las preparaciones y productos más apreciados en
           Celendín y la región Cajamarca.
         </p>
+
+        <Link href="/gastronomia/favoritos" className={styles.verFavoritos}>
+          ★ Ver mis favoritos
+        </Link>
       </div>
 
-      <div className={styles.grid}>
-        {platos.map((plato) => (
-          <article className={styles.tarjeta} key={plato.nombre}>
-            <div className={styles.imagenContenedor}>
-              <Image
-                src={plato.imagen}
-                alt={plato.nombre}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className={styles.imagen}
-              />
+      {lugares.map((lugar) => (
+        <div className={styles.grupoLugar} key={lugar}>
+          <div className={styles.grid}>
+            {platos
+              .filter((p) => p.lugar === lugar)
+              .map((plato) => (
+                <article className={styles.tarjeta} key={plato.slug}>
+                  <div className={styles.imagenContenedor}>
+                    <Image
+                      src={plato.imagen}
+                      alt={plato.nombre}
+                      fill
+                      sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className={styles.imagen}
+                    />
 
-              <span className={styles.categoria}>{plato.categoria}</span>
-            </div>
+                    <span className={styles.categoria}>{plato.categoria}</span>
 
-            <div className={styles.contenido}>
-              <h3>{plato.nombre}</h3>
+                    <BotonFavorito slug={plato.slug} variante="icono" />
+                  </div>
 
-              <p>{plato.descripcion}</p>
+                  <div className={styles.contenido}>
+                    <h3>{plato.nombre}</h3>
 
-              <button
-                type="button"
-                className={styles.botonReceta}
-                onClick={() => setPlatoActivo(plato)}
-              >
-                Ver receta
-              </button>
-            </div>
-          </article>
-        ))}
-      </div>
+                    <p>{plato.descripcion}</p>
 
-      {platoActivo && <RecetaModal plato={platoActivo} cerrar={cerrarReceta} />}
+                    <Link
+                      href={`/gastronomia/${plato.slug}`}
+                      className={styles.botonReceta}
+                    >
+                      Ver receta
+                    </Link>
+                  </div>
+                </article>
+              ))}
+          </div>
+        </div>
+      ))}
     </section>
   );
 }

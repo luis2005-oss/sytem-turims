@@ -1,0 +1,178 @@
+.pagina {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #f8faf7;
+}
+
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.2rem, 3vw, 2.2rem);
+  width: min(100% - 2rem, 75rem);
+  margin-inline: auto;
+  /* arriba deja espacio para el menú fijo */
+  padding-block: clamp(5.5rem, 9vw, 7.5rem) clamp(2rem, 5vw, 4rem);
+}
+
+/* ============ ENCABEZADO ============ */
+.encabezado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.encabezado > span {
+  font-size: clamp(0.75rem, 0.6vw + 0.55rem, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2e7d32;
+}
+
+.titulo {
+  font-size: clamp(1.7rem, 3.5vw + 0.8rem, 3rem);
+  line-height: 1.15;
+  color: #1b4332;
+}
+
+.encabezado p {
+  font-size: clamp(0.95rem, 0.8vw + 0.7rem, 1.15rem);
+  color: #4a5a50;
+}
+
+/* ============ VACÍO ============ */
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  text-align: center;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.vacio p {
+  font-size: clamp(1rem, 1vw + 0.7rem, 1.2rem);
+  color: #4a5a50;
+}
+
+/* ============ GRID: móvil 1 · tablet 2 · laptop 3 · PC grande 4 ============ */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 2vw, 1.8rem);
+}
+
+/* ============ TARJETA ============ */
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.imagenContenedor {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #e8efe9;
+}
+
+.imagen {
+  object-fit: cover;
+}
+
+.contenido {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: clamp(0.9rem, 2vw, 1.3rem);
+}
+
+.contenido h2 {
+  font-size: clamp(1.05rem, 1vw + 0.8rem, 1.4rem);
+  color: #1b4332;
+}
+
+.lugar {
+  flex: 1;
+  font-size: clamp(0.8rem, 0.5vw + 0.65rem, 0.95rem);
+  color: #4a5a50;
+}
+
+/* ============ BOTONES ============ */
+.botonReceta {
+  align-self: flex-start;
+  padding: 0.55rem 1.2rem;
+  font-size: clamp(0.85rem, 0.6vw + 0.65rem, 1rem);
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  background: #2e7d32;
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+.volver {
+  display: flex;
+  justify-content: center;
+}
+
+.botonVolver {
+  padding: 0.65rem 1.4rem;
+  font-size: clamp(0.9rem, 0.7vw + 0.65rem, 1.05rem);
+  font-weight: 600;
+  color: #1b4332;
+  text-decoration: none;
+  border: 2px solid #1b4332;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Hover solo con mouse (laptop/PC), no en pantallas táctiles */
+@media (hover: hover) {
+  .tarjeta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  }
+  .botonReceta:hover {
+    background: #1b5e20;
+  }
+  .botonVolver:hover {
+    color: #ffffff;
+    background: #1b4332;
+  }
+}
+
+/* ============ RESPONSIVE ============ */
+@media (min-width: 600px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1440px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Móvil: botones a todo el ancho */
+@media (max-width: 480px) {
+  .botonReceta,
+  .botonVolver {
+    align-self: stretch;
+    text-align: center;
+  }
+  .botonVolver {
+    width: 100%;
+  }
+}
