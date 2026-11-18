@@ -1,26 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Receta.module.css";
-import BotonFavorito from "./BotonFavorito";
-import BotonDescargar from "./BotonDescargar";
-import botones from "./BotonesReceta.module.css";
 
 export default function Receta({ plato, anterior, siguiente }) {
   return (
     <main className={styles.contenedor}>
       <div className={styles.barra}>
         <span className={styles.categoria}>{plato.categoria}</span>
-
-        <div className={botones.acciones}>
-          <BotonFavorito slug={plato.slug} />
-          <BotonDescargar plato={plato} />
-        </div>
       </div>
 
       <header className={styles.encabezado}>
         <h1 className={styles.titulo}>{plato.nombre}</h1>
         <p className={styles.descripcion}>{plato.descripcion}</p>
-        {plato.lugar && <p className={styles.lugar}>📍 {plato.lugar}</p>}
       </header>
 
       <div className={styles.contenido}>
@@ -39,7 +30,7 @@ export default function Receta({ plato, anterior, siguiente }) {
           <section className={styles.bloque}>
             <h2>Ingredientes</h2>
             <ul>
-              {plato.receta.ingredientes.map((ingrediente) => (
+              {plato.ingredientes.map((ingrediente) => (
                 <li key={ingrediente}>{ingrediente}</li>
               ))}
             </ul>
@@ -48,7 +39,7 @@ export default function Receta({ plato, anterior, siguiente }) {
           <section className={styles.bloque}>
             <h2>Preparación</h2>
             <ol>
-              {plato.receta.pasos.map((paso, i) => (
+              {plato.preparacion.map((paso, i) => (
                 <li key={i}>{paso}</li>
               ))}
             </ol>

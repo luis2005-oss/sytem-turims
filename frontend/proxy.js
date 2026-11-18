@@ -49,7 +49,10 @@ async function comprobarSesion(request) {
     if (respuesta?.ok) {
       const datos = await respuesta.json().catch(() => ({}));
       if (datos.admin) {
-        return { admin: datos.admin, setCookies: respuesta.headers.getSetCookie() };
+        return {
+          admin: datos.admin,
+          setCookies: respuesta.headers.getSetCookie(),
+        };
       }
     }
 

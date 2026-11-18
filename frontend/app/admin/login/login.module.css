@@ -67,7 +67,50 @@
   outline-offset: 2px;
 }
 
-.formulario button {
+/* Campo de contraseña con el botón del ojo dentro */
+.campoClave {
+  position: relative;
+}
+
+.campoClave input {
+  padding-right: 54px;
+}
+
+/* Edge trae su propio ojo: se oculta para no duplicarlo */
+.campoClave input::-ms-reveal,
+.campoClave input::-ms-clear {
+  display: none;
+}
+
+.ojo {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.ojo:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ojo:focus-visible {
+  outline: 2px solid #5ae62e;
+  color: #5ae62e;
+}
+
+.formulario .enviar {
   min-height: 52px;
   margin-top: 18px;
   border: none;
@@ -80,13 +123,13 @@
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.formulario button:disabled {
+.formulario .enviar:disabled {
   opacity: 0.6;
   cursor: wait;
 }
 
 @media (hover: hover) {
-  .formulario button:not(:disabled):hover {
+  .formulario .enviar:not(:disabled):hover {
     transform: translateY(-3px);
   }
 }

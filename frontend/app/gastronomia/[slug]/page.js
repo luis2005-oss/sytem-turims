@@ -1,30 +1,36 @@
 import { notFound } from "next/navigation";
 import Receta from "../components/Receta";
-import { platos } from "../data/platosdata";
+import { platos as listaPlatos } from "../data/platosdata";
 
-export function generateStaticParams() {
-  return platos.map((p) => ({ slug: p.slug }));
+// Los platos no traen "slug" en sus datos, así que se genera a partir del
+// nombre: "Caldo Verde" -> "caldo-verde" (URL: /gastronomia/caldo-verde)
+function crearSlug(texto) {
+  return texto
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
-export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const plato = platos.find((p) => p.slug === slug);
-  if (!plato) return {};
-  return {
-    title: `${plato.nombre} | Gastronomía de Celendín`,
-    description: plato.descripcion,
-  };
+const platos = listaPlatos.map((plato) => ({
+  ...plato,
+  slug: crearSlug(plato.nombre),
+}));
+
+export function generateStaticParams() {
+  return platos.map((plato) => ({ slug: plato.slug }));
 }
 
 export default async function RecetaPage({ params }) {
   const { slug } = await params;
-  const i = platos.findIndex((p) => p.slug === slug);
-  if (i === -1) notFound();
+  const indice = platos.findIndex((p) => p.slug === slug);
 
-  const anterior = platos[(i - 1 + platos.length) % platos.length];
-  const siguiente = platos[(i + 1) % platos.length];
+  if (indice === -1) notFound();
 
-  return (
-    <Receta plato={platos[i]} anterior={anterior} siguiente={siguiente} />
-  );
+  const plato = platos[indice];
+  const anterior = platos[(indice - 1 + platos.length) % platos.length];
+  const siguiente = platos[(indice + 1) % platos.length];
+
+  return <Receta plato={plato} anterior={anterior} siguiente={siguiente} />;
 }
