@@ -43,7 +43,7 @@ export function generarRefreshToken() {
   return randomBytes(48).toString("base64url");
 }
 
-/** En la BD se guarda solo el hash: si se filtra la BD, los tokens no sirven. */
+
 export function hashRefreshToken(token) {
   return createHash("sha256").update(token).digest("hex");
 }
