@@ -97,6 +97,8 @@ function prepararDatos(body, recurso, esActualizacion = false) {
 }
 
 function responderError(res, error) {
+  console.error("[contenido] Error en operación de base de datos:", error);
+
   if (error.code === "P2002") {
     return res.status(409).json({ error: "Ya existe un registro con ese nombre o título." });
   }
@@ -104,7 +106,11 @@ function responderError(res, error) {
     return res.status(404).json({ error: "No se encontró el contenido solicitado." });
   }
   return res.status(error.status || 500).json({
-    error: error.status ? error.message : "Ocurrió un error al procesar el contenido.",
+    error: error.status
+      ? error.message
+      : process.env.NODE_ENV !== "production"
+        ? error.message || "Error desconocido al procesar el contenido."
+        : "Ocurrió un error al procesar el contenido.",
   });
 }
 
