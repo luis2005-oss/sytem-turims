@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import BotonSalir from "./BotonSalir";
 import styles from "./admin.module.css";
 
@@ -59,7 +58,6 @@ const MODULOS = {
 const VACIO = { publicado: false };
 
 export default function AdminContenido({ admin }) {
-  const router = useRouter();
   const [modulo, setModulo] = useState("centros-turisticos");
   const [registros, setRegistros] = useState([]);
   const [busqueda, setBusqueda] = useState("");
@@ -73,7 +71,7 @@ export default function AdminContenido({ admin }) {
   const config = MODULOS[modulo];
   const totalPublicados = useMemo(() => registros.filter((item) => item.publicado).length, [registros]);
 
-  async function cargar() {
+  const cargar = useCallback(async () => {
     setCargando(true);
     setError("");
     try {
@@ -87,11 +85,11 @@ export default function AdminContenido({ admin }) {
     } finally {
       setCargando(false);
     }
-  }
+  }, [modulo, busqueda]);
 
   useEffect(() => {
     cargar();
-  }, [modulo, busqueda]);
+  }, [cargar]);
 
   async function subirImagen(archivo) {
     if (!archivo) return;
