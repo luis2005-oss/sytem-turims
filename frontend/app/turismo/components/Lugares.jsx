@@ -14,14 +14,11 @@ export default async function Lugares() {
     }
   } catch {}
   const combinados = totalAdministrados > 0
-    ? lugaresPublicados.map((lugar) => ({ ...lugar, imagen: lugar.imagenUrl || "/turismo/01-plaza-de-armas.jpg" }))
-    : lugares.map((estatico) => {
-    const administrado = lugaresPublicados.find((actual) => actual.slug === estatico.slug || actual.nombre === estatico.nombre);
-    return administrado
-      ? { ...estatico, ...administrado, imagen: administrado.imagenUrl || estatico.imagen }
-      : estatico;
-  });
-  });
+    ? lugaresPublicados.map((lugar) => ({
+        ...lugar,
+        imagen: lugar.imagenUrl || "/turismo/01-plaza-de-armas.jpg",
+      }))
+    : lugares;
   return (
     <section id="lugares" className={styles.placesSection}>
       <div className={styles.container}>
