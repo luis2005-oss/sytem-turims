@@ -36,7 +36,10 @@ npx prisma generate
 npm run db:migrate -- --name contenido_admin
 npm run seed:content
 npm run seed
+cd ../frontend
+npm install
 cd ..
+npm install
 ```
 
 - La migración crea las tablas para los cuatro módulos.
