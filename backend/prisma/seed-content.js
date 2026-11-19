@@ -11,9 +11,9 @@ const raiz = resolve(dirname(fileURLToPath(import.meta.url)), "../../");
 
 function cargarExportacion(ruta, nombre) {
   const contenido = readFileSync(resolve(raiz, ruta), "utf8")
-    .replace(/export\\s+const\\s+/g, "const ");
+    .replace(/export\s+const\s+/g, "const ");
   const contexto = {};
-  runInNewContext(`${contenido}\\nglobalThis.__resultado = ${nombre};`, contexto);
+  runInNewContext(`${contenido}\nglobalThis.__resultado = ${nombre};`, contexto);
   return contexto.__resultado;
 }
 
@@ -23,7 +23,7 @@ try {
 
   const centros = lugares.map((lugar) => ({
     nombre: lugar.nombre,
-    slug: lugar.nombre.normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+    slug: lugar.nombre.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
     tipo: lugar.tipo,
     zona: lugar.zona,
     ubicacion: lugar.ubicacion,
@@ -38,7 +38,7 @@ try {
     categoria: plato.categoria,
     descripcion: plato.descripcion,
     tiempoPreparacion: plato.tiempo,
-    porciones: Number(String(plato.porciones || "").match(/\\d+/)?.[0]) || null,
+    porciones: Number(String(plato.porciones || "").match(/\d+/)?.[0]) || null,
     ingredientes: plato.ingredientes,
     preparacion: plato.preparacion,
     imagenUrl: plato.imagen,
