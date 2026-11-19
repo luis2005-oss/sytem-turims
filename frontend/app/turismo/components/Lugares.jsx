@@ -4,21 +4,24 @@ import { lugares } from "../data/lugaresData";
 
 export default async function Lugares() {
   let lugaresPublicados = [];
+  let totalAdministrados = 0;
   try {
     const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/centros-turisticos`, { cache: "no-store" });
-    if (respuesta.ok) lugaresPublicados = (await respuesta.json()).data || [];
+    if (respuesta.ok) {
+      const contenido = await respuesta.json();
+      lugaresPublicados = contenido.data || [];
+      totalAdministrados = contenido.total || 0;
+    }
   } catch {}
-  const combinados = lugares.map((estatico) => {
+  const combinados = totalAdministrados > 0
+    ? lugaresPublicados.map((lugar) => ({ ...lugar, imagen: lugar.imagenUrl || "/turismo/01-plaza-de-armas.jpg" }))
+    : lugares.map((estatico) => {
     const administrado = lugaresPublicados.find((actual) => actual.slug === estatico.slug || actual.nombre === estatico.nombre);
     return administrado
       ? { ...estatico, ...administrado, imagen: administrado.imagenUrl || estatico.imagen }
       : estatico;
   });
-  for (const lugar of lugaresPublicados) {
-    if (!combinados.some((actual) => actual.slug === lugar.slug || actual.nombre === lugar.nombre)) {
-      combinados.push({ ...lugar, imagen: lugar.imagenUrl || "/turismo/01-plaza-de-armas.jpg" });
-    }
-  }
+  });
   return (
     <section id="lugares" className={styles.placesSection}>
       <div className={styles.container}>
