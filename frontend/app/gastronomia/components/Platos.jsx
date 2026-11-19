@@ -6,11 +6,24 @@ import BotonFavorito from "./BotonFavorito";
 
 export default async function Platos() {
   let platosPublicados = [];
+  let totalAdministradas = 0;
   try {
     const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/recetas`, { cache: "no-store" });
-    if (respuesta.ok) platosPublicados = (await respuesta.json()).data || [];
+    if (respuesta.ok) {
+      const contenido = await respuesta.json();
+      platosPublicados = contenido.data || [];
+      totalAdministradas = contenido.total || 0;
+    }
   } catch {}
-  const combinados = platos.map((estatico) => {
+  const combinados = totalAdministradas > 0
+    ? platosPublicados.map((receta) => ({
+        ...receta,
+        imagen: receta.imagenUrl || "/images/gastronomia/caldo verde.jpg",
+        ingredientes: Array.isArray(receta.ingredientes) ? receta.ingredientes : [],
+        preparacion: Array.isArray(receta.preparacion) ? receta.preparacion : [],
+        lugar: "Celendín",
+      }))
+    : platos.map((estatico) => {
     const administrada = platosPublicados.find((actual) => actual.slug === estatico.slug || actual.nombre === estatico.nombre);
     return administrada
       ? {
@@ -22,17 +35,7 @@ export default async function Platos() {
         }
       : estatico;
   });
-  for (const receta of platosPublicados) {
-    if (!combinados.some((actual) => actual.slug === receta.slug || actual.nombre === receta.nombre)) {
-      combinados.push({
-        ...receta,
-        imagen: receta.imagenUrl || "/images/gastronomia/caldo verde.jpg",
-        ingredientes: Array.isArray(receta.ingredientes) ? receta.ingredientes : [],
-        preparacion: Array.isArray(receta.preparacion) ? receta.preparacion : [],
-        lugar: "Celendín",
-      });
-    }
-  }
+  });
   const lugares = [...new Set(combinados.map((p) => p.lugar || "Celendín"))];
   return (
     <section id="platos" className={styles.seccionPlatos}>
