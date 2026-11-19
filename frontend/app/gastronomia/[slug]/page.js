@@ -27,20 +27,20 @@ export default async function RecetaPage({ params }) {
   const indice = platos.findIndex((p) => p.slug === slug);
   let plato = indice >= 0 ? platos[indice] : null;
 
-  if (!plato) {
-    try {
-      const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/recetas/${slug}`, { cache: "no-store" });
-      if (respuesta.ok) {
-        const registro = (await respuesta.json()).data;
-        plato = {
-          ...registro,
-          imagen: registro.imagenUrl || "/images/gastronomia/caldo verde.jpg",
-          ingredientes: Array.isArray(registro.ingredientes) ? registro.ingredientes : [],
-          preparacion: Array.isArray(registro.preparacion) ? registro.preparacion : [],
-        };
-      }
-    } catch {}
-  }
+  // Si existe una versión administrada, tiene prioridad sobre el contenido estático.
+  try {
+    const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/recetas/${slug}`, { cache: "no-store" });
+    if (respuesta.ok) {
+      const registro = (await respuesta.json()).data;
+      plato = {
+        ...plato,
+        ...registro,
+        imagen: registro.imagenUrl || plato?.imagen || "/images/gastronomia/caldo verde.jpg",
+        ingredientes: Array.isArray(registro.ingredientes) ? registro.ingredientes : [],
+        preparacion: Array.isArray(registro.preparacion) ? registro.preparacion : [],
+      };
+    }
+  } catch {}
 
   if (!plato) notFound();
 
