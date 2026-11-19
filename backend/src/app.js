@@ -3,10 +3,10 @@ import cors from "cors";
 import express from "express";
 import authRoutes from "./routes/auth.routes.js";
 import contenidoRoutes from "./routes/contenido.routes.js";
+import cloudinaryRoutes from "./routes/cloudinary.routes.js";
 
 const app = express();
 
-// Detrás de un proxy (Next.js, Render, Railway...) para obtener la IP real
 app.set("trust proxy", 1);
 
 app.use(
@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.get("/api/health", (req, res) => res.json({ ok: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/admin/contenido", contenidoRoutes);
+app.use("/api/admin/cloudinary", cloudinaryRoutes);
 
 app.use((req, res) => res.status(404).json({ error: "Ruta no encontrada." }));
 
