@@ -1,4 +1,5 @@
 import styles from "./fiestas.module.css";
+import ContenidoPublicado from "../../components/ContenidoPublicado";
 
 import Hero from "./components/hero";
 import Introduccion from "./components/Introduccion";
@@ -20,6 +21,7 @@ export default function FiestasPage() {
       <Actividades />
       <Timeline />
       <Cta />
+      <ContenidoPublicado tipo="fiestas" titulo="Más celebraciones y tradiciones" />
     </main>
   );
 }
