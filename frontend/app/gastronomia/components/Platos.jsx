@@ -10,7 +10,18 @@ export default async function Platos() {
     const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/recetas`, { cache: "no-store" });
     if (respuesta.ok) platosPublicados = (await respuesta.json()).data || [];
   } catch {}
-  const combinados = [...platos];
+  const combinados = platos.map((estatico) => {
+    const administrada = platosPublicados.find((actual) => actual.slug === estatico.slug || actual.nombre === estatico.nombre);
+    return administrada
+      ? {
+          ...estatico,
+          ...administrada,
+          imagen: administrada.imagenUrl || estatico.imagen,
+          ingredientes: Array.isArray(administrada.ingredientes) ? administrada.ingredientes : estatico.ingredientes,
+          preparacion: Array.isArray(administrada.preparacion) ? administrada.preparacion : estatico.preparacion,
+        }
+      : estatico;
+  });
   for (const receta of platosPublicados) {
     if (!combinados.some((actual) => actual.slug === receta.slug || actual.nombre === receta.nombre)) {
       combinados.push({
