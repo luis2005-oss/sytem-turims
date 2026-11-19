@@ -26,6 +26,7 @@ export default async function RecetaPage({ params }) {
   const { slug } = await params;
   const indice = platos.findIndex((p) => p.slug === slug);
   let plato = indice >= 0 ? platos[indice] : null;
+  let registroNoDisponible = false;
 
   try {
     const listaRespuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/recetas`, { cache: "no-store" });
@@ -33,21 +34,22 @@ export default async function RecetaPage({ params }) {
       const lista = await listaRespuesta.json();
       if (lista.total > 0) {
         const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/recetas/${slug}`, { cache: "no-store" });
-        if (!respuesta.ok) notFound();
-        const registro = (await respuesta.json()).data;
-        plato = {
-          ...registro,
-          imagen: registro.imagenUrl || "/images/gastronomia/caldo verde.jpg",
-          ingredientes: Array.isArray(registro.ingredientes) ? registro.ingredientes : [],
-          preparacion: Array.isArray(registro.preparacion) ? registro.preparacion : [],
-        };
+        if (!respuesta.ok) {
+          registroNoDisponible = true;
+        } else {
+          const registro = (await respuesta.json()).data;
+          plato = {
+            ...registro,
+            imagen: registro.imagenUrl || "/images/gastronomia/caldo verde.jpg",
+            ingredientes: Array.isArray(registro.ingredientes) ? registro.ingredientes : [],
+            preparacion: Array.isArray(registro.preparacion) ? registro.preparacion : [],
+          };
+        }
       }
     }
-  } catch (error) {
-    if (error?.digest?.startsWith("NEXT_NOT_FOUND")) throw error;
-  }
+  } catch {}
 
-  if (!plato) notFound();
+  if (registroNoDisponible || !plato) notFound();
 
   const anterior = indice >= 0 ? platos[(indice - 1 + platos.length) % platos.length] : plato;
   const siguiente = indice >= 0 ? platos[(indice + 1) % platos.length] : plato;
