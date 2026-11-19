@@ -68,6 +68,7 @@ export default function AdminContenido({ admin }) {
   const [mensaje, setMensaje] = useState("");
   const [formulario, setFormulario] = useState(null);
   const [guardando, setGuardando] = useState(false);
+  const [subiendoImagen, setSubiendoImagen] = useState(false);
 
   const config = MODULOS[modulo];
   const totalPublicados = useMemo(() => registros.filter((item) => item.publicado).length, [registros]);
@@ -91,6 +92,51 @@ export default function AdminContenido({ admin }) {
   useEffect(() => {
     cargar();
   }, [modulo, busqueda]);
+
+  async function subirImagen(archivo) {
+    if (!archivo) return;
+    if (!archivo.type.startsWith("image/")) {
+      setError("Selecciona un archivo de imagen válido.");
+      return;
+    }
+    if (archivo.size > 8 * 1024 * 1024) {
+      setError("La imagen no debe superar los 8 MB.");
+      return;
+    }
+
+    setSubiendoImagen(true);
+    setError("");
+    try {
+      const firmaRespuesta = await fetch("/api/admin/cloudinary/signature", { method: "POST" });
+      const firma = await firmaRespuesta.json();
+      if (!firmaRespuesta.ok) throw new Error(firma.error || "No se pudo preparar la subida.");
+
+      const datos = new FormData();
+      datos.append("file", archivo);
+      datos.append("api_key", firma.apiKey);
+      datos.append("timestamp", String(firma.timestamp));
+      datos.append("folder", firma.folder);
+      datos.append("signature", firma.signature);
+
+      const subida = await fetch(`https://api.cloudinary.com/v1_1/${firma.cloudName}/image/upload`, {
+        method: "POST",
+        body: datos,
+      });
+      const imagen = await subida.json();
+      if (!subida.ok) throw new Error(imagen.error?.message || "Cloudinary no pudo subir la imagen.");
+
+      setFormulario((actual) => ({
+        ...actual,
+        imagenUrl: imagen.secure_url,
+        imagenPublicId: imagen.public_id,
+      }));
+      setMensaje("Imagen subida correctamente a Cloudinary.");
+    } catch (err) {
+      setError(err.message || "No se pudo subir la imagen.");
+    } finally {
+      setSubiendoImagen(false);
+    }
+  }
 
   function abrirNuevo() {
     setFormulario({ id: null, ...VACIO });
@@ -237,6 +283,17 @@ export default function AdminContenido({ admin }) {
                     </label>
                   );
                 })}
+              </div>
+              <div className={styles.subidaImagenAdmin}>
+                <label>
+                  <span>Subir imagen a Cloudinary</span>
+                  <input type="file" accept="image/*" disabled={subiendoImagen} onChange={(e) => subirImagen(e.target.files?.[0])} />
+                </label>
+                <small>{subiendoImagen ? "Subiendo imagen..." : "Formatos de imagen admitidos. Tamaño máximo: 8 MB."}</small>
+                {formulario.imagenUrl && <div className={styles.previsualizacionImagen}>
+                  <img src={formulario.imagenUrl} alt="Vista previa del contenido" />
+                  <button type="button" onClick={() => setFormulario((actual) => ({ ...actual, imagenUrl: "", imagenPublicId: "" }))}>Quitar imagen</button>
+                </div>}
               </div>
               <label className={styles.checkPublicar}><input type="checkbox" checked={Boolean(formulario.publicado)} onChange={(e) => cambiarCampo("publicado", e.target.checked)} /> Publicar en el sitio web</label>
               <button className={styles.botonPrimario} type="submit" disabled={guardando}>{guardando ? "Guardando..." : "Guardar contenido"}</button>
