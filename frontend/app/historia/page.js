@@ -1,4 +1,5 @@
 import Hero from "./components/Hero";
+import ContenidoPublicado from "../../components/ContenidoPublicado";
 import SeccionTextoImagen from "./components/SeccionTextoImagen";
 import Timeline from "./components/TimeLine";
 import Cultura from "./components/Cultura";
@@ -44,6 +45,7 @@ export default function Historia() {
 
       <Timeline />
       <Cultura />
+      <ContenidoPublicado tipo="historia" titulo="Más relatos de nuestra historia" />
     </>
   );
 }

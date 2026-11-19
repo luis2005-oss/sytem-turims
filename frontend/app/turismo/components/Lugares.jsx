@@ -2,7 +2,23 @@ import Image from "next/image";
 import styles from "./Lugares.module.css";
 import { lugares } from "../data/lugaresData";
 
-export default function Lugares() {
+export default async function Lugares() {
+  let lugaresPublicados = [];
+  let totalAdministrados = 0;
+  try {
+    const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/centros-turisticos`, { cache: "no-store" });
+    if (respuesta.ok) {
+      const contenido = await respuesta.json();
+      lugaresPublicados = contenido.data || [];
+      totalAdministrados = contenido.total || 0;
+    }
+  } catch {}
+  const combinados = totalAdministrados > 0
+    ? lugaresPublicados.map((lugar) => ({
+        ...lugar,
+        imagen: lugar.imagenUrl || "/turismo/01-plaza-de-armas.jpg",
+      }))
+    : lugares;
   return (
     <section id="lugares" className={styles.placesSection}>
       <div className={styles.container}>
@@ -16,15 +32,16 @@ export default function Lugares() {
         </div>
 
         <div className={styles.placesGrid}>
-          {lugares.map((lugar, index) => (
+          {combinados.map((lugar, index) => (
             <article className={styles.placeCard} key={lugar.nombre}>
               <div className={styles.cardImage}>
                 <Image
-                  src={lugar.imagen}
+                  src={lugar.imagenUrl || lugar.imagen}
                   alt={lugar.nombre}
                   fill
                   sizes="(max-width: 700px) 100vw, (max-width: 1050px) 50vw, 33vw"
                   className={styles.coverImage}
+                  unoptimized
                 />
 
                 <span className={styles.cardNumber}>

@@ -4,9 +4,27 @@ import styles from "./Platos.module.css";
 import { platos } from "../data/platosdata";
 import BotonFavorito from "./BotonFavorito";
 
-const lugares = [...new Set(platos.map((p) => p.lugar))];
-
-export default function Platos() {
+export default async function Platos() {
+  let platosPublicados = [];
+  let totalAdministradas = 0;
+  try {
+    const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/recetas`, { cache: "no-store" });
+    if (respuesta.ok) {
+      const contenido = await respuesta.json();
+      platosPublicados = contenido.data || [];
+      totalAdministradas = contenido.total || 0;
+    }
+  } catch {}
+  const combinados = totalAdministradas > 0
+    ? platosPublicados.map((receta) => ({
+        ...receta,
+        imagen: receta.imagenUrl || "/images/gastronomia/caldo verde.jpg",
+        ingredientes: Array.isArray(receta.ingredientes) ? receta.ingredientes : [],
+        preparacion: Array.isArray(receta.preparacion) ? receta.preparacion : [],
+        lugar: "Celendín",
+      }))
+    : platos;
+  const lugares = [...new Set(combinados.map((p) => p.lugar || "Celendín"))];
   return (
     <section id="platos" className={styles.seccionPlatos}>
       <div className={styles.encabezado}>
@@ -27,17 +45,18 @@ export default function Platos() {
       {lugares.map((lugar) => (
         <div className={styles.grupoLugar} key={lugar}>
           <div className={styles.grid}>
-            {platos
-              .filter((p) => p.lugar === lugar)
+            {combinados
+              .filter((p) => (p.lugar || "Celendín") === lugar)
               .map((plato) => (
                 <article className={styles.tarjeta} key={plato.slug}>
                   <div className={styles.imagenContenedor}>
                     <Image
-                      src={plato.imagen}
+                      src={plato.imagenUrl || plato.imagen}
                       alt={plato.nombre}
                       fill
                       sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className={styles.imagen}
+                      unoptimized
                     />
 
                     <span className={styles.categoria}>{plato.categoria}</span>

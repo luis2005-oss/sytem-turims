@@ -7,7 +7,10 @@
     "dev": "node --watch --env-file=.env src/server.js",
     "start": "node src/server.js",
     "seed": "node --env-file=.env prisma/seed.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "seed:content": "node --env-file=.env prisma/seed-content.js"
   },
   "dependencies": {
     "@prisma/client": "^6.0.0",

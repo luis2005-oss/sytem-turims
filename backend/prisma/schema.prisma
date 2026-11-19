@@ -11,13 +11,11 @@ model Admin {
   id        Int      @id @default(autoincrement())
   nombre    String
   email     String   @unique
-  password  String // hash bcrypt, nunca la contraseña en texto plano
+  password  String
   createdAt DateTime @default(now())
   sesiones  Sesion[]
 }
 
-// Una fila por sesión iniciada. Guarda el HASH del refresh token (nunca el token).
-// Si se borra la fila, la sesión queda cerrada de inmediato (logout real).
 model Sesion {
   id        Int      @id @default(autoincrement())
   adminId   Int
@@ -29,7 +27,6 @@ model Sesion {
   @@index([adminId])
 }
 
-// Intentos fallidos de login, para limitar la fuerza bruta
 model LoginIntento {
   id        Int      @id @default(autoincrement())
   email     String
@@ -38,4 +35,76 @@ model LoginIntento {
 
   @@index([email, createdAt])
   @@index([ip, createdAt])
+}
+
+model CentroTuristico {
+  id             Int      @id @default(autoincrement())
+  nombre         String
+  slug           String   @unique
+  tipo           String
+  zona           String?
+  ubicacion      String
+  descripcion    String   @db.Text
+  imagenUrl      String?
+  imagenPublicId String?
+  publicado      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([publicado])
+  @@index([nombre])
+}
+
+model Receta {
+  id                 Int      @id @default(autoincrement())
+  nombre             String
+  slug               String   @unique
+  categoria          String
+  descripcion        String   @db.Text
+  tiempoPreparacion  String?
+  porciones          Int?
+  ingredientes       Json     @default("[]")
+  preparacion        Json     @default("[]")
+  imagenUrl          String?
+  imagenPublicId     String?
+  publicado          Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([publicado])
+  @@index([nombre])
+}
+
+model Fiesta {
+  id             Int      @id @default(autoincrement())
+  nombre         String
+  slug           String   @unique
+  fecha          String?
+  lugar          String?
+  descripcion    String   @db.Text
+  imagenUrl      String?
+  imagenPublicId String?
+  publicado      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([publicado])
+  @@index([nombre])
+}
+
+model Historia {
+  id             Int      @id @default(autoincrement())
+  titulo         String
+  slug           String   @unique
+  categoria      String?
+  resumen        String?  @db.Text
+  contenido      String   @db.Text
+  imagenUrl      String?
+  imagenPublicId String?
+  publicado      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([publicado])
+  @@index([titulo])
 }

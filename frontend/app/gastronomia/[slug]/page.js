@@ -25,12 +25,33 @@ export function generateStaticParams() {
 export default async function RecetaPage({ params }) {
   const { slug } = await params;
   const indice = platos.findIndex((p) => p.slug === slug);
+  let plato = indice >= 0 ? platos[indice] : null;
+  let registroNoDisponible = false;
 
-  if (indice === -1) notFound();
+  try {
+    const listaRespuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/recetas`, { cache: "no-store" });
+    if (listaRespuesta.ok) {
+      const lista = await listaRespuesta.json();
+      if (lista.total > 0) {
+        const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/recetas/${slug}`, { cache: "no-store" });
+        if (!respuesta.ok) {
+          registroNoDisponible = true;
+        } else {
+          const registro = (await respuesta.json()).data;
+          plato = {
+            ...registro,
+            imagen: registro.imagenUrl || "/images/gastronomia/caldo verde.jpg",
+            ingredientes: Array.isArray(registro.ingredientes) ? registro.ingredientes : [],
+            preparacion: Array.isArray(registro.preparacion) ? registro.preparacion : [],
+          };
+        }
+      }
+    }
+  } catch {}
 
-  const plato = platos[indice];
-  const anterior = platos[(indice - 1 + platos.length) % platos.length];
-  const siguiente = platos[(indice + 1) % platos.length];
+  if (registroNoDisponible || !plato) notFound();
 
+  const anterior = indice >= 0 ? platos[(indice - 1 + platos.length) % platos.length] : plato;
+  const siguiente = indice >= 0 ? platos[(indice + 1) % platos.length] : plato;
   return <Receta plato={plato} anterior={anterior} siguiente={siguiente} />;
 }
