@@ -8,7 +8,12 @@ export default async function Lugares() {
     const respuesta = await fetch(`${process.env.BACKEND_URL || "http://localhost:4000"}/api/public/contenido/centros-turisticos`, { cache: "no-store" });
     if (respuesta.ok) lugaresPublicados = (await respuesta.json()).data || [];
   } catch {}
-  const combinados = [...lugares];
+  const combinados = lugares.map((estatico) => {
+    const administrado = lugaresPublicados.find((actual) => actual.slug === estatico.slug || actual.nombre === estatico.nombre);
+    return administrado
+      ? { ...estatico, ...administrado, imagen: administrado.imagenUrl || estatico.imagen }
+      : estatico;
+  });
   for (const lugar of lugaresPublicados) {
     if (!combinados.some((actual) => actual.slug === lugar.slug || actual.nombre === lugar.nombre)) {
       combinados.push({ ...lugar, imagen: lugar.imagenUrl || "/turismo/01-plaza-de-armas.jpg" });
