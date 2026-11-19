@@ -12,11 +12,14 @@ export async function listarContenidoPublicado(req, res) {
   if (!recurso) return res.status(404).json({ error: "Módulo no válido." });
 
   try {
-    const registros = await prisma[recurso.model].findMany({
-      where: { publicado: true },
-      orderBy: { updatedAt: "desc" },
-    });
-    return res.json({ data: registros });
+    const [registros, total] = await Promise.all([
+      prisma[recurso.model].findMany({
+        where: { publicado: true },
+        orderBy: { updatedAt: "desc" },
+      }),
+      prisma[recurso.model].count(),
+    ]);
+    return res.json({ data: registros, total });
   } catch {
     return res.status(500).json({ error: "No se pudo consultar el contenido." });
   }
