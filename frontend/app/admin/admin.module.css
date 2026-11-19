@@ -43,3 +43,52 @@
   font-weight: 700;
   cursor: pointer;
 }
+
+.contenedorAdmin { max-width: 1180px; margin: 0 auto; }
+.encabezadoAdmin { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.encabezadoAdmin h1 { margin: 10px 0 6px; color: #123f34; font-size: clamp(1.8rem, 4vw, 2.5rem); }
+.encabezadoAdmin p, .gestionCabecera p { margin: 0; color: #61706c; }
+.resumenAdmin { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 22px; }
+.resumenAdmin > div { padding: 20px; border: 1px solid #e2ebe4; border-radius: 16px; background: white; }
+.resumenAdmin span, .resumenAdmin strong { display: block; }
+.resumenAdmin span { color: #718079; font-size: .85rem; }
+.resumenAdmin strong { margin-top: 7px; color: #123f34; font-size: 1.25rem; }
+.modulosAdmin { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 18px; }
+.modulosAdmin button, .botonCerrar { padding: 11px 16px; border: 1px solid #d8e5da; border-radius: 999px; background: white; color: #315b47; font-weight: 700; cursor: pointer; }
+.modulosAdmin .moduloActivo { border-color: #123f34; background: #123f34; color: white; }
+.gestionAdmin { padding: clamp(18px, 3vw, 30px); border: 1px solid #e3ece5; border-radius: 20px; background: white; box-shadow: 0 12px 35px rgba(16,63,52,.06); }
+.gestionCabecera { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.gestionCabecera h2, .gestionCabecera h3 { margin: 0 0 5px; color: #123f34; }
+.botonPrimario { min-height: 43px; padding: 0 19px; border: 0; border-radius: 999px; background: #123f34; color: white; font-weight: 700; cursor: pointer; }
+.botonPrimario:disabled { opacity: .6; cursor: wait; }
+.busquedaAdmin { width: 100%; max-width: 420px; min-height: 44px; margin: 0 0 18px; padding: 0 14px; border: 1px solid #d8e5da; border-radius: 10px; color: #203b30; outline-color: #278849; }
+.mensajeAdmin, .errorAdmin { padding: 11px 14px; border-radius: 10px; }
+.mensajeAdmin { background: #e8f6ec; color: #176438; }
+.errorAdmin { background: #fff0ef; color: #a12e28; }
+.formAdmin { margin: 8px 0 24px; padding: 22px; border: 1px solid #dce9df; border-radius: 16px; background: #f8fbf8; }
+.camposAdmin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+.camposAdmin label { display: flex; flex-direction: column; gap: 7px; color: #315346; font-size: .9rem; font-weight: 700; }
+.camposAdmin label input, .camposAdmin label textarea { width: 100%; padding: 11px 12px; border: 1px solid #d5e1d7; border-radius: 9px; background: white; color: #203b30; font: inherit; font-weight: 400; }
+.camposAdmin label textarea { resize: vertical; }
+.camposAdmin .campoCompleto { grid-column: 1 / -1; }
+.checkPublicar { display: flex; align-items: center; gap: 9px; margin: 17px 0; color: #315346; font-weight: 600; }
+.estadoAdmin { padding: 26px 12px; color: #718079; text-align: center; }
+.tablaContenedor { overflow-x: auto; }
+.tablaAdmin { width: 100%; border-collapse: collapse; text-align: left; }
+.tablaAdmin th, .tablaAdmin td { padding: 14px 12px; border-bottom: 1px solid #e9efea; vertical-align: middle; }
+.tablaAdmin th { color: #718079; font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; }
+.tablaAdmin td { color: #345347; font-size: .9rem; }
+.tablaAdmin td strong, .tablaAdmin td small { display: block; }
+.tablaAdmin td small { margin-top: 4px; color: #84928a; }
+.estadoPublicado, .estadoBorrador { display: inline-block; padding: 5px 9px; border-radius: 999px; font-size: .78rem; font-weight: 700; }
+.estadoPublicado { background: #e5f5e9; color: #176438; }
+.estadoBorrador { background: #f1f3f1; color: #68756c; }
+.accionesAdmin { display: flex; flex-wrap: wrap; gap: 6px; }
+.accionesAdmin button { padding: 7px 9px; border: 1px solid #dce7de; border-radius: 7px; background: white; color: #315b47; cursor: pointer; }
+.accionesAdmin .botonEliminar { color: #ad3832; border-color: #f0d5d2; }
+@media (max-width: 700px) {
+  .encabezadoAdmin, .gestionCabecera { align-items: flex-start; flex-direction: column; }
+  .resumenAdmin { grid-template-columns: 1fr; }
+  .camposAdmin { grid-template-columns: 1fr; }
+  .camposAdmin .campoCompleto { grid-column: auto; }
+}
