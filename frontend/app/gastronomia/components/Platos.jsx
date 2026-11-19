@@ -23,19 +23,7 @@ export default async function Platos() {
         preparacion: Array.isArray(receta.preparacion) ? receta.preparacion : [],
         lugar: "Celendín",
       }))
-    : platos.map((estatico) => {
-    const administrada = platosPublicados.find((actual) => actual.slug === estatico.slug || actual.nombre === estatico.nombre);
-    return administrada
-      ? {
-          ...estatico,
-          ...administrada,
-          imagen: administrada.imagenUrl || estatico.imagen,
-          ingredientes: Array.isArray(administrada.ingredientes) ? administrada.ingredientes : estatico.ingredientes,
-          preparacion: Array.isArray(administrada.preparacion) ? administrada.preparacion : estatico.preparacion,
-        }
-      : estatico;
-  });
-  });
+    : platos;
   const lugares = [...new Set(combinados.map((p) => p.lugar || "Celendín"))];
   return (
     <section id="platos" className={styles.seccionPlatos}>
