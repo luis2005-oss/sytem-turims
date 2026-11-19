@@ -4,8 +4,6 @@ import styles from "./Platos.module.css";
 import { platos } from "../data/platosdata";
 import BotonFavorito from "./BotonFavorito";
 
-const lugares = [...new Set(platos.map((p) => p.lugar))];
-
 export default async function Platos() {
   let platosPublicados = [];
   try {
